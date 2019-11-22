@@ -1,7 +1,17 @@
 <div>
+  <button (click)="selected='cars'">Cars</button>
+  <button (click)="selected='makes'">Makes</button>
+  <button (click)="selected='parts'">Parts</button>
+  <button (click)="selected=''">API Connection Satuts</button>
   <div [ngSwitch]="selected">
     <div *ngSwitchCase="'cars'">
       <app-car-list></app-car-list>
+    </div>
+    <div *ngSwitchCase="'makes'">
+      <app-make-list></app-make-list>
+    </div>
+    <div *ngSwitchCase="'parts'">
+      <app-part-list></app-part-list>
     </div>
     <div *ngSwitchDefault>
       <app-status></app-status>

@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
   get 'api/status'
   scope '/api' do
-    resources :cars
+    resources :cars, :makes, :parts
   end
 
   resources :parts do
