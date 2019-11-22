@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/api-service.service';
 import { Car } from '../car.model'
+import { NgModule } from '@angular/compiler/src/core';
 
 @Component({
   selector: 'app-car-list',
@@ -9,15 +10,19 @@ import { Car } from '../car.model'
 })
 export class CarListComponent implements OnInit {
   cars: Car[]
+  page: Number
+  order: String
 
   constructor(private apiService: ApiService) { }
 
   ngOnInit() {
-    this.update_cars(1, undefined)
+    this.page = 1
+    this.order = 'make'
+    this.update_cars()
   }
 
-  update_cars(page: Number, order: String) {
-    this.apiService.get_cars(page, order).subscribe((data: Array<Car>) => this.cars = data.map(car => {
+  update_cars() {
+    this.apiService.get_cars(this.page, this.order).subscribe((data: Array<Car>) => this.cars = data.map(car => {
       return new Car(
         car['id'],
         car['model'],
