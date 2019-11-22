@@ -78,3 +78,6 @@ gem 'pry', '~> 0.12.2'
 # gem 'bootstrap-multiselect_rails', '~> 0.9.4'
 
 gem 'rack-cors'
+
+# recommended by github as a vunlerability
+gem "loofah", ">= 2.3.1"
