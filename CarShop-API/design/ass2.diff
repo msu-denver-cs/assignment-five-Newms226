@@ -1,0 +1,560 @@
+diff --git a/.gitignore b/.gitignore
+index f3ae195..81452db 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -4,8 +4,6 @@
+ # or operating system, you probably want to add a global ignore instead:
+ #   git config --global core.excludesfile '~/.gitignore_global'
+ 
+-.idea/
+-
+ # Ignore bundler config.
+ /.bundle
+ 
+diff --git a/Gemfile b/Gemfile
+index 62959bb..19ae71f 100644
+--- a/Gemfile
++++ b/Gemfile
+@@ -60,7 +60,3 @@ end
+ 
+ # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+-
+-gem 'autocomplete_rails'
+-gem 'jquery-rails'
+-gem 'jquery-ui-rails'
+diff --git a/Gemfile.lock b/Gemfile.lock
+index 9e98df1..e08aa7b 100644
+--- a/Gemfile.lock
++++ b/Gemfile.lock
+@@ -47,8 +47,6 @@ GEM
+     archive-zip (0.12.0)
+       io-like (~> 0.3.0)
+     arel (9.0.0)
+-    autocomplete_rails (0.4.1)
+-      rails (>= 4.0, < 5.3)
+     bindex (0.8.1)
+     bootsnap (1.4.5)
+       msgpack (~> 1.0)
+@@ -86,12 +84,6 @@ GEM
+     io-like (0.3.0)
+     jbuilder (2.9.1)
+       activesupport (>= 4.2.0)
+-    jquery-rails (4.3.5)
+-      rails-dom-testing (>= 1, < 3)
+-      railties (>= 4.2.0)
+-      thor (>= 0.14, < 2.0)
+-    jquery-ui-rails (6.0.1)
+-      railties (>= 3.2.16)
+     listen (3.1.5)
+       rb-fsevent (~> 0.9, >= 0.9.4)
+       rb-inotify (~> 0.9, >= 0.9.7)
+@@ -199,15 +191,12 @@ PLATFORMS
+   ruby
+ 
+ DEPENDENCIES
+-  autocomplete_rails
+   bootsnap (>= 1.1.0)
+   byebug
+   capybara (>= 2.15)
+   chromedriver-helper
+   coffee-rails (~> 4.2)
+   jbuilder (~> 2.5)
+-  jquery-rails
+-  jquery-ui-rails
+   listen (>= 3.0.5, < 3.2)
+   puma (~> 3.11)
+   rails (~> 5.2.3)
+diff --git a/app/assets/javascripts/application.js b/app/assets/javascripts/application.js
+index 533bfc7..82e6f0f 100644
+--- a/app/assets/javascripts/application.js
++++ b/app/assets/javascripts/application.js
+@@ -11,7 +11,6 @@
+ // about supported directives.
+ //
+ //= require rails-ujs
++//= require activestorage
+ //= require turbolinks
+-//= require jquery
+-//= require jquery-ui
+ //= require_tree .
+diff --git a/app/assets/javascripts/cars.coffee b/app/assets/javascripts/cars.coffee
+index 59713bf..24f83d1 100644
+--- a/app/assets/javascripts/cars.coffee
++++ b/app/assets/javascripts/cars.coffee
+@@ -1,9 +1,3 @@
+ # Place all the behaviors and hooks related to the matching controller here.
+ # All this logic will automatically be available in application.js.
+ # You can use CoffeeScript in this file: http://coffeescript.org/
+-
+-$(document).on 'turbolinks:load', ->
+-  $("input[data-autocomplete]").each ->
+-    url = $(this).data('autocomplete')
+-    $(this).autocomplete
+-      source: url
+diff --git a/app/assets/javascripts/makes.coffee b/app/assets/javascripts/makes.coffee
+index 59713bf..24f83d1 100644
+--- a/app/assets/javascripts/makes.coffee
++++ b/app/assets/javascripts/makes.coffee
+@@ -1,9 +1,3 @@
+ # Place all the behaviors and hooks related to the matching controller here.
+ # All this logic will automatically be available in application.js.
+ # You can use CoffeeScript in this file: http://coffeescript.org/
+-
+-$(document).on 'turbolinks:load', ->
+-  $("input[data-autocomplete]").each ->
+-    url = $(this).data('autocomplete')
+-    $(this).autocomplete
+-      source: url
+diff --git a/app/assets/javascripts/parts.coffee b/app/assets/javascripts/parts.coffee
+index 59713bf..24f83d1 100644
+--- a/app/assets/javascripts/parts.coffee
++++ b/app/assets/javascripts/parts.coffee
+@@ -1,9 +1,3 @@
+ # Place all the behaviors and hooks related to the matching controller here.
+ # All this logic will automatically be available in application.js.
+ # You can use CoffeeScript in this file: http://coffeescript.org/
+-
+-$(document).on 'turbolinks:load', ->
+-  $("input[data-autocomplete]").each ->
+-    url = $(this).data('autocomplete')
+-    $(this).autocomplete
+-      source: url
+diff --git a/app/assets/stylesheets/application.css b/app/assets/stylesheets/application.css
+index 89e3819..d05ea0f 100644
+--- a/app/assets/stylesheets/application.css
++++ b/app/assets/stylesheets/application.css
+@@ -12,5 +12,4 @@
+  *
+  *= require_tree .
+  *= require_self
+- *= require jquery-ui
+  */
+diff --git a/app/controllers/cars_controller.rb b/app/controllers/cars_controller.rb
+index a1b7200..45c8e69 100644
+--- a/app/controllers/cars_controller.rb
++++ b/app/controllers/cars_controller.rb
+@@ -1,7 +1,7 @@
+ class CarsController < ApplicationController
+   before_action :set_car, only: [:show, :edit, :update, :destroy]
+ 
+-  autocomplete :car, :model, full_search: true
++  # autocomplete :car, :vin, full_search: true
+ 
+   # GET /cars
+   # GET /cars.json
+@@ -31,8 +31,6 @@ class CarsController < ApplicationController
+   # POST /cars.json
+   def create
+     @car = Car.new(car_params)
+-    @makes = Make.all
+-    @parts = Part.all
+ 
+     respond_to do |format|
+       if @car.save
+@@ -71,7 +69,7 @@ class CarsController < ApplicationController
+ 
+   # GET /cars/search
+   def search
+-    @cars = Car.where("model like ?", "%#{params[:search]}%")
++    @cars = Car.where("vin like ?", params[:search])
+     render :index
+   end
+ 
+diff --git a/app/controllers/makes_controller.rb b/app/controllers/makes_controller.rb
+index 61b146e..19460d9 100644
+--- a/app/controllers/makes_controller.rb
++++ b/app/controllers/makes_controller.rb
+@@ -1,8 +1,6 @@
+ class MakesController < ApplicationController
+   before_action :set_make, only: [:show, :edit, :update, :destroy]
+ 
+-  autocomplete :make, :name, full_search: true
+-
+   # GET /makes
+   # GET /makes.json
+   def index
+@@ -63,11 +61,6 @@ class MakesController < ApplicationController
+     end
+   end
+ 
+-  def search
+-    @makes = Make.where("name like ?", "%#{params[:search]}%")
+-    render :index
+-  end
+-
+   private
+     # Use callbacks to share common setup or constraints between actions.
+     def set_make
+diff --git a/app/controllers/parts_controller.rb b/app/controllers/parts_controller.rb
+index 400a2c1..2e52866 100644
+--- a/app/controllers/parts_controller.rb
++++ b/app/controllers/parts_controller.rb
+@@ -1,8 +1,6 @@
+ class PartsController < ApplicationController
+   before_action :set_part, only: [:show, :edit, :update, :destroy]
+ 
+-  autocomplete :part, :name, full_search: true
+-
+   # GET /parts
+   # GET /parts.json
+   def index
+@@ -63,11 +61,6 @@ class PartsController < ApplicationController
+     end
+   end
+ 
+-  def search
+-    @parts = Part.where("name like ?", "%#{params[:search]}%")
+-    render :index
+-  end
+-
+   private
+     # Use callbacks to share common setup or constraints between actions.
+     def set_part
+diff --git a/app/models/car.rb b/app/models/car.rb
+index 9317d93..b636ddc 100644
+--- a/app/models/car.rb
++++ b/app/models/car.rb
+@@ -1,8 +1,4 @@
+ class Car < ApplicationRecord
+   belongs_to :make
+   has_and_belongs_to_many :parts
+-
+-  validates :vin, presence: true, numericality: true, uniqueness: true
+-  validates :model, presence: true
+-  validates :make_id, presence: true
+ end
+diff --git a/app/models/make.rb b/app/models/make.rb
+index 2273438..c53d11d 100644
+--- a/app/models/make.rb
++++ b/app/models/make.rb
+@@ -1,6 +1,2 @@
+ class Make < ApplicationRecord
+-  has_many :cars
+-
+-  validates :name, presence: true
+-  validates :country, presence: true
+ end
+diff --git a/app/models/part.rb b/app/models/part.rb
+index 2455f40..72dc3f4 100644
+--- a/app/models/part.rb
++++ b/app/models/part.rb
+@@ -1,5 +1,3 @@
+ class Part < ApplicationRecord
+   has_and_belongs_to_many :cars
+-
+-  validates :name, presence: true
+ end
+diff --git a/app/views/cars/index.html.erb b/app/views/cars/index.html.erb
+index 125b646..a4c9c4a 100644
+--- a/app/views/cars/index.html.erb
++++ b/app/views/cars/index.html.erb
+@@ -31,11 +31,3 @@
+ 
+ <br>
+ <%= link_to 'New Car', new_car_path %>
+-<br>
+-
+-<%= form_tag(search_cars_url, method: "get") do %>
+-  <%= label_tag(:search, "Search by Model:") %>
+-  <%= text_field_tag :search, params[:search],
+-        data: { autocomplete: autocomplete_car_model_cars_path } %>    
+-  <%= submit_tag("Search") %>
+-<% end %>
+diff --git a/app/views/makes/index.html.erb b/app/views/makes/index.html.erb
+index 77fc94d..f675780 100644
+--- a/app/views/makes/index.html.erb
++++ b/app/views/makes/index.html.erb
+@@ -27,10 +27,3 @@
+ <br>
+ 
+ <%= link_to 'New Make', new_make_path %>
+-<br>
+-<%= form_tag(search_makes_url, method: "get") do %>
+-  <%= label_tag(:search, "Search by Make Name:") %>
+-  <%= text_field_tag :search, params[:search],
+-                     data: { autocomplete: autocomplete_make_name_makes_path } %>
+-  <%= submit_tag("Search") %>
+-<% end %>
+diff --git a/app/views/parts/index.html.erb b/app/views/parts/index.html.erb
+index 33ff8e0..bbc1cf9 100644
+--- a/app/views/parts/index.html.erb
++++ b/app/views/parts/index.html.erb
+@@ -25,9 +25,3 @@
+ <br>
+ 
+ <%= link_to 'New Part', new_part_path %>
+-<%= form_tag(search_parts_url, method: "get") do %>
+-  <%= label_tag(:search, "Search by Part Name:") %>
+-  <%= text_field_tag :search, params[:search],
+-                     data: { autocomplete: autocomplete_part_name_parts_path } %>
+-  <%= submit_tag("Search") %>
+-<% end %>
+diff --git a/config/routes.rb b/config/routes.rb
+index c38fcdb..44136c2 100644
+--- a/config/routes.rb
++++ b/config/routes.rb
+@@ -1,29 +1,6 @@
+ Rails.application.routes.draw do
+-  root 'cars#index'
+-
+-  resources :parts do
+-    get :autocomplete_part_name, on: :collection
+-
+-    collection do
+-      get 'search'
+-    end
+-  end
+-
+-  resources :makes do
+-    get :autocomplete_make_name, on: :collection
+-
+-    collection do
+-      get 'search'
+-    end
+-  end
+-
+-  resources :cars do
+-    get :autocomplete_car_model, on: :collection
+-
+-    collection do
+-      get 'search'
+-    end
+-  end
+-
++  resources :cars
++  resources :parts
++  resources :makes
+   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+ end
+diff --git a/db/seeds.rb b/db/seeds.rb
+index 4ff65e2..1beea2a 100644
+--- a/db/seeds.rb
++++ b/db/seeds.rb
+@@ -5,5 +5,3 @@
+ #
+ #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
+ #   Character.create(name: 'Luke', movie: movies.first)
+-
+-
+diff --git a/test/controllers/cars_controller_test.rb b/test/controllers/cars_controller_test.rb
+index 7a36bac..c2f842f 100644
+--- a/test/controllers/cars_controller_test.rb
++++ b/test/controllers/cars_controller_test.rb
+@@ -3,27 +3,8 @@ require 'test_helper'
+ class CarsControllerTest < ActionDispatch::IntegrationTest
+   setup do
+     @car = cars(:one)
+-    # @update = {
+-    #     make_id: makes(:one),
+-    #     model: "my model",
+-    #     vin: 200
+-    # }
+   end
+ 
+-  # Custom Tests
+-
+-  test "should find a car that exists" do
+-    get search_cars_url, params: {search: "MyString"}
+-    assert_select 'td', 'MyString'
+-  end
+-
+-  test "shouldn't find a car that doesnt exist" do
+-    get search_cars_url, params: {search: "I dont exist"}
+-    assert_select 'td', false
+-  end
+-
+-  # Scaffold Tests
+-
+   test "should get index" do
+     get cars_url
+     assert_response :success
+@@ -36,24 +17,12 @@ class CarsControllerTest < ActionDispatch::IntegrationTest
+ 
+   test "should create car" do
+     assert_difference('Car.count') do
+-      post cars_url, params: { car: { make_id: @car.make_id, model: @car.model, vin: 4 } }
++      post cars_url, params: { car: { make_id: @car.make_id, model: @car.model, vin: @car.vin } }
+     end
+ 
+     assert_redirected_to car_url(Car.last)
+   end
+ 
+-  # test "shouldn't create a car if the make does not exist" do
+-  #   assert_no_difference('Car.count') do
+-  #     post cars_url, params: { car: { make_id: "not a valid make", model: @car.model, vin: 4 } }
+-  #   end
+-  #
+-  #   # assert_redirected_to car_url(Car.last)
+-  #
+-  #   # post car
+-  #   # car = Car.create(model: "model", vin: 400, make: "not a valid make")
+-  #   # refute car.valid?
+-  # end
+-
+   test "should show car" do
+     get car_url(@car)
+     assert_response :success
+diff --git a/test/controllers/makes_controller_test.rb b/test/controllers/makes_controller_test.rb
+index 93a22b3..52dfd39 100644
+--- a/test/controllers/makes_controller_test.rb
++++ b/test/controllers/makes_controller_test.rb
+@@ -5,18 +5,6 @@ class MakesControllerTest < ActionDispatch::IntegrationTest
+     @make = makes(:one)
+   end
+ 
+-  test "should find a make that exists" do
+-    get search_makes_url, params: {search: "MyString"}
+-    assert_select 'td', 'MyString'
+-  end
+-
+-  test "shouldn't find a make that doesnt exist" do
+-    get search_makes_url, params: {search: "I dont exist"}
+-    assert_select 'td', false
+-  end
+-
+-  # Scaffold Tests
+-
+   test "should get index" do
+     get makes_url
+     assert_response :success
+diff --git a/test/controllers/parts_controller_test.rb b/test/controllers/parts_controller_test.rb
+index 8c89059..0191216 100644
+--- a/test/controllers/parts_controller_test.rb
++++ b/test/controllers/parts_controller_test.rb
+@@ -5,18 +5,6 @@ class PartsControllerTest < ActionDispatch::IntegrationTest
+     @part = parts(:one)
+   end
+ 
+-  test "should find a part that exists" do
+-    get search_parts_url, params: {search: "MyString"}
+-    assert_select 'td', 'MyString'
+-  end
+-
+-  test "shouldn't find a part that doesnt exist" do
+-    get search_parts_url, params: {search: "I dont exist"}
+-    assert_select 'td', false
+-  end
+-
+-  # Scaffold Tests
+-
+   test "should get index" do
+     get parts_url
+     assert_response :success
+diff --git a/test/fixtures/cars.yml b/test/fixtures/cars.yml
+index e93d513..0e67f35 100644
+--- a/test/fixtures/cars.yml
++++ b/test/fixtures/cars.yml
+@@ -8,4 +8,4 @@ one:
+ two:
+   make: two
+   model: MyString
+-  vin: 2
++  vin: 1
+diff --git a/test/models/car_test.rb b/test/models/car_test.rb
+index 65ff56f..39bdaec 100644
+--- a/test/models/car_test.rb
++++ b/test/models/car_test.rb
+@@ -1,45 +1,7 @@
+ require 'test_helper'
+ 
+ class CarTest < ActiveSupport::TestCase
+-  test "should create a car with a unique VIN and all fields present" do
+-    car = Car.create(model: "model", vin: 400, make: makes(:one))
+-    assert car.valid?
+-    assert car.save
+-  end
+-
+-  test "should not allow duplicate VINs" do
+-    car = Car.create(model: "model", vin: cars(:one).vin, make: makes(:one))
+-    refute car.valid?
+-
+-    assert_equal car.errors.messages, {:vin=>["has already been taken"]}
+-  end
+-
+-  test "shouldn't allow a non-number VIN" do
+-    car = Car.create(model: "model", vin: "not a number", make: makes(:one))
+-    refute car.valid?
+-
+-    assert_equal car.errors.messages, {:vin=>["is not a number"]}
+-  end
+-
+-  test "should require a VIN" do
+-    car = Car.create(model: "model", make: makes(:one))
+-    refute car.valid?
+-
+-    assert_equal car.errors.messages, {:vin=>["can't be blank", "is not a number"]}
+-  end
+-
+-  test "should require a model" do
+-    car = Car.create(make: makes(:one), vin: 400)
+-    refute car.valid?
+-
+-    assert_equal car.errors.messages, {:model=>["can't be blank"]}
+-  end
+-
+-  test "should require a make" do
+-    car = Car.create(model: "model", vin: 400)
+-    refute car.valid?
+-
+-    assert_equal car.errors.messages, {:make=>["must exist"], :make_id=>["can't be blank"]}
+-  end
+-
++  # test "the truth" do
++  #   assert true
++  # end
+ end
+diff --git a/test/models/make_test.rb b/test/models/make_test.rb
+index 26c3100..8162f47 100644
+--- a/test/models/make_test.rb
++++ b/test/models/make_test.rb
+@@ -1,25 +1,7 @@
+ require 'test_helper'
+ 
+ class MakeTest < ActiveSupport::TestCase
+-  test "shouldn't be valid without a name" do
+-    make = Make.create(country: "my country")
+-    refute make.valid?
+-
+-
+-    assert_equal make.errors.messages, {:name=>["can't be blank"]}
+-  end
+-
+-  test "shouldn't be valid without a country" do
+-    make = Make.create(name: "my name")
+-    refute make.valid?
+-
+-
+-    assert_equal make.errors.messages, {:country=>["can't be blank"]}
+-  end
+-
+-  test "should be valid with a name and a country" do
+-    make = Make.create(name: "my name", country: "my country")
+-    assert make.valid?
+-    assert make.save
+-  end
++  # test "the truth" do
++  #   assert true
++  # end
+ end
+diff --git a/test/models/part_test.rb b/test/models/part_test.rb
+index d23f06a..bba3103 100644
+--- a/test/models/part_test.rb
++++ b/test/models/part_test.rb
+@@ -1,13 +1,7 @@
+ require 'test_helper'
+ 
+ class PartTest < ActiveSupport::TestCase
+-  test "should require a name" do
+-    part = Part.new
+-    refute part.valid?
+-    assert_equal part.errors.messages, {:name=>["can't be blank"]}
+-
+-    part.name = "my name"
+-    assert part.valid?
+-    assert part.save
+-  end
++  # test "the truth" do
++  #   assert true
++  # end
+ end

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CarShop</title>
+    <meta name="author" content="Michael Newman"/>
+    <meta name="description" content="My first real(ish) web application! Enjoy!"/>
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+  <nav class="navbar navbar-expand-sm sticky-top navbar-light bg-light">
+      <a class="navbar-brand" href="<%= root_path %>">Car Depot</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="<%= nav_link_class(cars_path)%>">
+            <a class="nav-link" href="<%= cars_path %>">Cars<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="<%= nav_link_class(makes_path)%>">
+            <a class="nav-link" href="<%= makes_path %>">Makes</a>
+          </li>
+          <li class="<%= nav_link_class(parts_path)%>">
+            <a class="nav-link" href="<%= parts_path %>">Parts</a>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <button type="button" class="<%= right_nav_class(about_creator_path) %>">
+            <a href="<%= about_creator_path %>">About Me</a>
+          </button>
+        </form>
+        <form class="form-inline my-2 my-lg-0">
+          <button type="button" class="<%= right_nav_class(about_assignments_path) %>">
+            <a href="<%= about_assignments_path %>">Assignments</a>
+          </button>
+        </form>
+        <% if user_signed_in? %>
+          <form class="form-inline my-2 my-lg-0">
+            <button type="button" class="<%= right_nav_class(destroy_user_session_path) %>">
+              <%= link_to 'Log Out', destroy_user_session_path, method: :delete %>
+            </button>
+          </form>
+        <% else %>
+          <form class="form-inline my-2 my-lg-0">
+            <button type="button" class="<%= right_nav_class(new_user_session_path) %>">
+              <%= link_to 'Sign In', new_user_session_url, method: :get %>
+            </button>
+          </form>
+          <form class="form-inline my-2 my-lg-0">
+            <button type="button" class="<%= right_nav_class(new_user_registration_path) %>">
+              <%= link_to 'Sign Up', new_user_registration_url, method: :get %>
+            </button>
+          </form>
+        <% end %>
+      </div>
+
+    </nav>
+<!--    <div class="ui menu">-->
+<!--      <div class="header item">-->
+<!--        Our Company-->
+<!--      </div>-->
+<!--      <a class="item">-->
+<!--        About Us-->
+<!--      </a>-->
+<!--      <a class="item">-->
+<!--        Jobs-->
+<!--      </a>-->
+<!--      <a class="item active">-->
+<!--        Locations-->
+<!--      </a>-->
+<!--    </div>-->
+
+    <div class="ui container center">
+      <% if notice %>
+        <p class="alert alert-success" role="alert"><%= notice %></p>
+      <% end %>
+      <% if alert %>
+        <p class="alert alert-danger" role="alert"><%= alert %></p>
+      <% end %>
+      <div>
+        <%= yield %>
+      </div>
+    </div>
+  </body>
+</html>

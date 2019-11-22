@@ -1,0 +1,35 @@
+<%= form_with(model: part, local: true, class: "ui large form segment") do |form| %>
+  <% if part.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(part.errors.count, "error") %> prohibited this part from being saved:</h2>
+
+      <ul>
+      <% part.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :name %>
+    <%= form.text_field :name, class: "form-control"  %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit class: 'btn btn-primary'  %>
+  </div>
+
+<!--  <form class="ui large form segment">-->
+<!--    <h3 class="ui header">Car form:</h3>-->
+
+<!--    <div class="field">-->
+<!--      <label for="title">Title:</label>-->
+<!--      <input name="title" id="title" #newtitle>-->
+<!--    </div>-->
+<!--    <div class="field">-->
+<!--      <label for="link">Link:</label>-->
+<!--      <input name="link" id="link" #newlink>-->
+<!--    </div>-->
+<!--  </form>-->
+<% end %>

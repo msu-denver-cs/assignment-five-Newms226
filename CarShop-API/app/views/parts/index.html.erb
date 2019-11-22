@@ -1,0 +1,19 @@
+<h1>Parts|| <span><%= link_to 'New Part', new_part_path %></span></h1>
+
+<div class="top-search-bar">
+  <%= form_tag(search_parts_url, method: "get") do %>
+    <div class="input-group">
+      <%= text_field_tag :name, params[:name], placeholder: 'name', class: 'form-control',
+                         data: { autocomplete: autocomplete_part_name_parts_path } %>
+      <div class="input-group-append">
+        <%= submit_tag("Search", class: 'btn btn-success') %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<%= render 'parts/table' %>
+
+<div class="ui container">
+  <%= paginate @parts %>
+</div>

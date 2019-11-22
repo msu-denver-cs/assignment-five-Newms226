@@ -1,0 +1,10 @@
+<div>
+  <div [ngSwitch]="selected">
+    <div *ngSwitchCase="'cars'">
+      <app-cars></app-cars>
+    </div>
+    <div *ngSwitchDefault>
+      <app-status></app-status>
+    </div>
+  </div>
+</div>

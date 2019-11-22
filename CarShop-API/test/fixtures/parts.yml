@@ -1,0 +1,10 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+wheel:
+  name: Wheel
+
+tire:
+  name: Tire
+
+sport_wheel:
+  name: Sport Wheel

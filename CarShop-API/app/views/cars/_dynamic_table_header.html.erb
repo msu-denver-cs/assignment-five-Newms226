@@ -1,0 +1,16 @@
+<thead>
+  <tr>
+    <%# require 'pp' %>
+    <%# pp request.headers.to_h %>
+    <%# puts request.headers['HTTP_REFERER'] %>
+    <%# binding.pry %>
+    <th scope="col"><%= link_to 'Make', get_car_order_url('make')%></th>
+    <th scope="col"><%= link_to 'Model', get_car_order_url('model')%></th>
+    <th scope="col"><%= link_to 'VIN', get_car_order_url('vin')%></th>
+    <th scope="col">Part</th>
+    <th colspan="2"></th>
+    <% if user_signed_in? %>
+      <th colspan="2"></th>
+    <% end %>
+  </tr>
+</thead>
