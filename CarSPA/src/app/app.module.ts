@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
+
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { StatusComponent } from './status/status.component';
@@ -24,7 +26,8 @@ import { PartDisplayComponent } from './parts/part-display/part-display.componen
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]
