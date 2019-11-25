@@ -1,6 +1,8 @@
 # require 'pry'
+require 'tasks/query_generator'
 
 class Car < ApplicationRecord
+
   belongs_to :make
   has_and_belongs_to_many :parts
 
@@ -8,6 +10,39 @@ class Car < ApplicationRecord
   validates :model, presence: true
   validates :make_id, presence: true
   # validates :part_ids, presence: true
+
+  def Car.search_keys
+    {
+      # Those that require a join and select
+      make: {
+          select: 'makes.name',
+          query: 'makes.name',
+          join: :make,
+      },
+      part: {
+          select: 'parts.name',
+          query: 'parts.name',
+          join: :parts,
+      },
+
+      # and those that do not
+      model: {
+          query: 'cars.model',
+      },
+
+      vin: {
+          query: 'cars.vin',
+      },
+    }
+  end
+
+  def Car.gen_base_query
+    -> { Car.select('cars.*') }
+  end
+
+  def Car.api_query (params)
+    QueryGenerator.execute(params, gen_base_query, search_keys)
+  end
 
   def Car.query(params={})
     r = Car.sort(Car.split_on_part(params), params)
@@ -22,9 +57,11 @@ class Car < ApplicationRecord
     r
   end
 
+
+
   private
     def Car.split_on_part(params={})
-      # binding.pry
+      binding.pry
       if  params[:part] == '' || (not params[:part])
         # puts '\n\nFOUND NOOOOO PART\n\n'
         Car.no_part_query(params)
@@ -69,7 +106,7 @@ class Car < ApplicationRecord
       elsif params[:order] == 'model'
         query.order(:model, 'makes.name', :vin).page params[:page]
       else
-        query.order('makes.name', :model, :vin).page params[:page]
+C        query.order('makes.name', :model, :vin).page params[:page]
       end
     end
 

@@ -1,1 +1,2 @@
-json.array! @cars, partial: "cars/car", as: :car
+json.meta @meta
+json.body @cars, partial: "cars/car", as: :car

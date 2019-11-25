@@ -1,4 +1,4 @@
-
+require 'pry'
 
 class CarsController < ApplicationController
   before_action :set_car, only: [:show, :edit, :update, :destroy]
@@ -9,7 +9,8 @@ class CarsController < ApplicationController
   # GET /cars
   # GET /cars.json
   def index
-    @cars = Car.index params
+    # binding.pry
+    @meta, @cars = Car.api_query params
   end
 
   # GET /cars/1
