@@ -12,7 +12,7 @@ module QueryGenerator
     completed_query = run_query(query, calls)
     meta = build_meta(completed_query)
 
-    
+
 
     if params[:page]
       paginate(completed_query, params[:page], meta) # returns meta, query

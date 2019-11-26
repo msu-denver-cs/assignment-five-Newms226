@@ -22,4 +22,14 @@ class PartTest < ActiveSupport::TestCase
     expected = [parts(:sport_wheel), parts(:tire), parts(:wheel)]
     assert_equal expected, results
   end
+
+  # API Tests
+
+  test 'API: should respond to search by name' do
+
+  end
+
+  test 'API: should respond to desc' do
+    # do we even want to do this?
+  end
 end

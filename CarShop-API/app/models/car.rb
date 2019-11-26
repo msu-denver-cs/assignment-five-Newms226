@@ -61,7 +61,7 @@ class Car < ApplicationRecord
 
   private
     def Car.split_on_part(params={})
-      binding.pry
+      # binding.pry
       if  params[:part] == '' || (not params[:part])
         # puts '\n\nFOUND NOOOOO PART\n\n'
         Car.no_part_query(params)
@@ -106,7 +106,7 @@ class Car < ApplicationRecord
       elsif params[:order] == 'model'
         query.order(:model, 'makes.name', :vin).page params[:page]
       else
-C        query.order('makes.name', :model, :vin).page params[:page]
+        query.order('makes.name', :model, :vin).page params[:page]
       end
     end
 

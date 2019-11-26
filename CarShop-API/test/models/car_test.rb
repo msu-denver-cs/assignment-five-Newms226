@@ -132,4 +132,34 @@ class CarTest < ActiveSupport::TestCase
     assert_equal exp, results
   end
 
+  # API tests
+
+  test 'API: should find item by VIN' do
+
+  end
+
+  test 'API: should find item by Model' do
+
+  end
+
+  test 'API: should find item by part name' do
+
+  end
+
+  test 'API: should find item by make name' do
+
+  end
+
+  test 'API: should find items without a part' do
+
+  end
+
+  test 'API: should be sorted by make by default' do
+
+  end
+
+  test 'API: should allow sorting by columns' do
+
+  end
+
 end

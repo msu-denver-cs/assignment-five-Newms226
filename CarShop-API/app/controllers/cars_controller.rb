@@ -10,7 +10,7 @@ class CarsController < ApplicationController
   # GET /cars.json
   def index
     # binding.pry
-    @meta, @cars = Car.api_query params
+    @cars = Car.query params
   end
 
   # GET /cars/1

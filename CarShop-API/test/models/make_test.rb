@@ -43,4 +43,22 @@ class MakeTest < ActiveSupport::TestCase
     actual = Make.query name: 'o'
     assert_equal [makes(:ford), makes(:toyota), makes(:zeo)], actual
   end
+
+  # API Tests
+
+  test 'API: should find by name' do
+
+  end
+
+  test 'API: should find by country' do
+
+  end
+
+  test 'API: should be sorted by name by default' do
+
+  end
+
+  test 'API: should allow sorting by country' do
+
+  end
 end
