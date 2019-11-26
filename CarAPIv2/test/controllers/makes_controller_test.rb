@@ -2,7 +2,7 @@ require 'test_helper'
 
 class MakesControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @make = makes(:one)
+    @make = makes(:audi)
   end
 
   test "should get index" do
@@ -12,7 +12,7 @@ class MakesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create make" do
     assert_difference('Make.count') do
-      post makes_url, params: { make: { country: @make.country, name: @make.name } }, as: :json
+      post makes_url, params: { make: { country: @make.country, name: "new make" } }, as: :json
     end
 
     assert_response 201

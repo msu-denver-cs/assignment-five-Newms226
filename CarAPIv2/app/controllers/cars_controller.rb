@@ -1,24 +1,24 @@
+require 'pry'
+
 class CarsController < ApplicationController
   before_action :set_car, only: [:show, :update, :destroy]
 
   # GET /cars
   def index
-    @cars = Car.api_query params
-
-    render json: @cars
+    @meta, @cars = Car.api_query search_params
   end
 
   # GET /cars/1
   def show
-    render json: @car
   end
 
   # POST /cars
   def create
     @car = Car.new(car_params)
 
+    # binding.pry
     if @car.save
-      render json: @car, status: :created, location: @car
+      render :show, status: :created, location: @make
     else
       render json: @car.errors, status: :unprocessable_entity
     end
@@ -27,7 +27,7 @@ class CarsController < ApplicationController
   # PATCH/PUT /cars/1
   def update
     if @car.update(car_params)
-      render json: @car
+      render :show, location: @make
     else
       render json: @car.errors, status: :unprocessable_entity
     end
@@ -48,4 +48,9 @@ class CarsController < ApplicationController
     def car_params
       params.require(:car).permit(:model, :make_id, :vin, :part_ids => [])
     end
+
+    def search_params
+      params.permit(:model, :make, :vin, :part, :order, :page, :desc)
+    end
+
 end

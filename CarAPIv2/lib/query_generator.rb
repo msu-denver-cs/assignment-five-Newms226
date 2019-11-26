@@ -39,8 +39,8 @@ module QueryGenerator
       # binding.pry
       search_keys = config[:search_keys]
 
-      selects = config[:default_selects].map { |str| build_select(str) }
-      joins = config[:default_joins].map { |str|  build_join(str) }
+      selects = config[:default_selects].map(&method(:build_select))
+      joins = config[:default_joins].map(&method(:build_join))
       wheres = []
 
       # p 'past init'

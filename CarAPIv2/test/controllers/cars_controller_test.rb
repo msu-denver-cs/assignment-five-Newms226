@@ -2,7 +2,8 @@ require 'test_helper'
 
 class CarsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @car = cars(:one)
+    @car = cars(:my_car)
+
   end
 
   test "should get index" do
@@ -12,7 +13,7 @@ class CarsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create car" do
     assert_difference('Car.count') do
-      post cars_url, params: { car: { make_id: @car.make_id, model: @car.model, vin: @car.vin } }, as: :json
+      post cars_url, params: { car: { make_id: @car.make_id, model: @car.model, vin: 10  } }, as: :json
     end
 
     assert_response 201

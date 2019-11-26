@@ -23,4 +23,13 @@ class Part < ApplicationRecord
   def self.api_query (params={})
     QueryGenerator.execute(params, search_config)
   end
+
+  # instance methods
+
+  def name_id
+    {
+        name: self.name,
+        id: self.id
+    }
+  end
 end

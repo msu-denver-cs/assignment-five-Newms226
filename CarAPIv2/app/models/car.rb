@@ -47,4 +47,14 @@ class Car < ApplicationRecord
   def Car.api_query (params={})
     QueryGenerator.execute(params, search_config)
   end
+
+  # instance methods
+
+  def make_name
+    Make.find_by_id(self.make_id).name
+  end
+
+  def parts_names_ids
+    self.parts.map(&:name_id)
+  end
 end
