@@ -1,0 +1,4 @@
+<p>Displaying {{parts.length}} parts from page {{page}}</p>
+<div *ngFor="let part of parts">
+    <app-part-display [part]="part"></app-part-display>
+</div>

@@ -1,0 +1,50 @@
+Current Sprint
+
+1. Write Contoller Tests
+2. Configure TravisCI
+
+
+Next Sprints
+
+## 2 Chapters from ng
+JUST WORK ON IT DAMNIT
+## DOCKERIZEEEEEEE :)
+## Front end
+1. interface for api request
+2. new api service (inheritance?)
+3. have the cars model use it
+4. install ngb
+5. Configure pagination!
+6. Configure search
+?. Autofill?
+7. Extrapolate to paged_table
+8. Implement for all types
+
+## 2 chapters from ng
+
+## NavBar
+1. Design components structure
+2. Implement NavBar
+  - dymaically assign class for selected
+
+## 2 chapters from ng
+
+## Security
+1. Log In
+2. Landing page
+  - correct allert rendering
+3. Nav bar popdown
+4. Signup page
+
+## 2 chapters from ng
+
+## TESTS, TESTS, TESTS
+
+## Mobile
+1. get items in table to render as cards when width is below a certian value
+
+## Docker
+
+## per-user car list
+
+## Deployment
