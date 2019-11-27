@@ -24,7 +24,7 @@ class QueryGeneratorTest < ActiveSupport::TestCase
     meta, query = Car.api_query page: 1
 
     assert meta[:paginated]
-    assert meta[:total_items] == 6
+    assert meta[:total] == 6
     assert meta[:cur_page] == 1
     assert meta[:per_page] == 5
     assert meta[:count] == 5
@@ -35,7 +35,7 @@ class QueryGeneratorTest < ActiveSupport::TestCase
     meta, query = Car.api_query page: 2
 
     assert meta[:paginated]
-    assert meta[:total_items] == 6
+    assert meta[:total] == 6
     assert meta[:cur_page] == 2
     assert meta[:per_page] == 5
     assert meta[:count] == 1
@@ -50,14 +50,14 @@ class QueryGeneratorTest < ActiveSupport::TestCase
     meta, query = Car.api_query({order: 'vin'})
     exp = Car.all.order(:vin).to_a
 
-    assert_equal Car.all.size, meta[:total_items]
+    assert_equal Car.all.size, meta[:total]
     assert_equal exp, query.to_a
 
     # Model test
     meta, query = Car.api_query({order: 'model'})
     exp = Car.all.order(:model).to_a
 
-    assert_equal Car.all.size, meta[:total_items]
+    assert_equal Car.all.size, meta[:total]
     assert_equal exp, query.to_a
   end
 
@@ -76,7 +76,7 @@ class QueryGeneratorTest < ActiveSupport::TestCase
     meta, query = Car.api_query part: 'tire', order: 'vin', page: 1
 
     assert meta[:paginated]
-    assert meta[:total_items] == 4
+    assert meta[:total] == 4
     assert meta[:cur_page] == 1
     assert meta[:per_page] == 2
     assert meta[:count] == 2
@@ -87,7 +87,7 @@ class QueryGeneratorTest < ActiveSupport::TestCase
     meta, query = Car.api_query part: 'tire', order: 'vin', page: 2
 
     assert meta[:paginated]
-    assert meta[:total_items] == 4
+    assert meta[:total] == 4
     assert meta[:cur_page] == 2
     assert meta[:per_page] == 2
     assert meta[:count] == 2
@@ -105,7 +105,7 @@ class QueryGeneratorTest < ActiveSupport::TestCase
     car = cars(:no_part)
     meta, query = Car.api_query({make: 'BMW', model: '3 series'})
 
-    assert_equal 1, meta[:total_items]
+    assert_equal 1, meta[:total]
     assert query.to_a.include? car
   end
 
@@ -114,17 +114,17 @@ class QueryGeneratorTest < ActiveSupport::TestCase
 
     meta, query = Car.api_query({})
 
-    assert_equal exp, meta[:total_items]
+    assert_equal exp, meta[:total]
     assert_equal exp, query.size
 
     exp = 2
     meta, query = Car.api_query({make: 'Audi'})
-    assert_equal exp, meta[:total_items]
+    assert_equal exp, meta[:total]
     assert_equal exp, query.size
 
     exp = 1
     meta, query = Car.api_query({part: 'Wheel', model: 'Prius'})
-    assert_equal exp, meta[:total_items]
+    assert_equal exp, meta[:total]
     assert_equal exp, query.size
   end
 

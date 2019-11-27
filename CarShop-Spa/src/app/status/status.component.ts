@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { StatusService } from './status.service';
-import { Status } from './status.model';
+import { ApiService } from '../api-service.service';
+
+export interface Status {
+  status: string;
+}
 
 @Component({
   selector: 'app-status',
@@ -8,20 +11,20 @@ import { Status } from './status.model';
   styleUrls: ['./status.component.css']
 })
 export class StatusComponent implements OnInit {
-  status: String;
+  status: Status;
 
-  constructor(private statusService: StatusService) { 
-    // this.status = statusService.get_status();
-    console.log('HERE');
-    // console.log(this.status);
-    this.showStatus();
+  constructor(private apiService: ApiService) { 
+    this.status = { status: '' };
   }
 
   showStatus() {
-    this.statusService.get_status().subscribe((data: Status) => this.status = data['data']);
+    this.apiService.getStatus().subscribe((data) => {
+      this.status = { status: data['status'] };
+    });
   }
 
   ngOnInit() {
+    this.showStatus();
   }
 
 }

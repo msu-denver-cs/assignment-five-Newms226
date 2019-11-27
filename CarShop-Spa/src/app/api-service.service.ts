@@ -1,13 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
+import { Status } from './status/status.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-  private apiRoot = 'http://localhost:3000/api/'
+  public apiRoot = 'http://localhost:3000/api'
 
   constructor(private http: HttpClient) {}
+
+  getStatus() {
+    return this.http.get(`${this.apiRoot}/status`)
+  }
 
   get_cars(page: Number, order: String) {
     return this.load(page, order, 'make', 'cars.json')
