@@ -92,7 +92,7 @@ module QueryGenerator
     end
 
     def self.build_meta (query)
-      { total_items: query.size }
+      { total: query.size }
     end
 
     def self.paginate (query, page, meta)
