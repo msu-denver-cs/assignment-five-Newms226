@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from 'src/app/api-service.service';
+import { ApiService } from 'src/app/api/api-service.service';
 import { Car } from '../car.model'
-import { NgModule } from '@angular/compiler/src/core';
+import { APIResponse } from 'src/app/api/query/query-response.model';
+import { Query } from 'src/app/api/query/query.model';
 
 @Component({
   selector: 'app-car-list',
@@ -9,31 +10,23 @@ import { NgModule } from '@angular/compiler/src/core';
   styleUrls: ['./car-list.component.css']
 })
 export class CarListComponent implements OnInit {
-  cars: Car[]
-  page: Number
-  order: String
+  response: APIResponse<Car>;
 
-  constructor(private apiService: ApiService) { }
-
-  ngOnInit() {
-    this.page = 1
-    this.order = 'make'
-    this.update_cars()
+  constructor(private apiService: ApiService) {
+    this.response = {
+      meta: { total: 0 },
+      data: []
+    }
   }
 
-  update_cars() {
-    this.apiService.get_cars(this.page, this.order).subscribe((data: Array<Car>) => this.cars = data.map(car => {
-      return new Car(
-        car['id'],
-        car['model'],
-        car['vin'],
-        car['make_name'],
-        car['parts'],
-        car['url'],
-        car['make_id'],
-        car['created_at'],
-        car['updated_at'])
-    }));
+  ngOnInit() {
+    this.update({table: 'cars', params: {page: 1}})
+  }
+
+  update(query: Query) {
+    this.apiService.get<Car>(query).subscribe((data: APIResponse<Car>) => {
+      this.response = data
+    })
   }
 
 }

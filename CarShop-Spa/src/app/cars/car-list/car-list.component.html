@@ -1,4 +1,4 @@
-<p>Displaying {{cars.length}} cars from page {{page}} sorted by {{order}}</p>
-<div *ngFor="let car of cars">
+<p>Displaying {{response.meta.total}} cars from page {{response.meta.cur_page}}</p>
+<div *ngFor="let car of response.data">
     <app-car-display [car]="car"></app-car-display>
 </div>

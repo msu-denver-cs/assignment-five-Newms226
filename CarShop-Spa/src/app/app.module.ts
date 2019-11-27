@@ -12,6 +12,8 @@ import { MakeListComponent } from './makes/make-list/make-list.component';
 import { MakeDisplayComponent } from './makes/make-display/make-display.component';
 import { PartListComponent } from './parts/part-list/part-list.component';
 import { PartDisplayComponent } from './parts/part-display/part-display.component';
+import { TableRootComponent } from './table/table-root/table-root.component';
+import { TableViewComponent } from './table/table-view/table-view.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { PartDisplayComponent } from './parts/part-display/part-display.componen
     MakeListComponent,
     MakeDisplayComponent,
     PartListComponent,
-    PartDisplayComponent
+    PartDisplayComponent,
+    TableRootComponent,
+    TableViewComponent
   ],
   imports: [
     BrowserModule,

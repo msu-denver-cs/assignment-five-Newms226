@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../api-service.service';
+import { ApiService } from '../api/api-service.service';
 
 export interface Status {
   status: string;
