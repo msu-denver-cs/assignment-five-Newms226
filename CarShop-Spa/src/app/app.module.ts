@@ -1,7 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap'
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatCardModule} from '@angular/material/card';
+
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -14,6 +17,8 @@ import { PartListComponent } from './parts/part-list/part-list.component';
 import { PartDisplayComponent } from './parts/part-display/part-display.component';
 import { TableRootComponent } from './table/table-root/table-root.component';
 import { TableViewComponent } from './table/table-view/table-view.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NavbarComponent } from './navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -26,12 +31,14 @@ import { TableViewComponent } from './table/table-view/table-view.component';
     PartListComponent,
     PartDisplayComponent,
     TableRootComponent,
-    TableViewComponent
+    TableViewComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    NgbModule
+    BrowserAnimationsModule,
+    MDBBootstrapModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

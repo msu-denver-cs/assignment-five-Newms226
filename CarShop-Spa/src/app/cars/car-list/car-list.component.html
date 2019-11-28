@@ -1,4 +1,55 @@
-<p>Displaying {{response.meta.total}} cars from page {{response.meta.cur_page}}</p>
-<div *ngFor="let car of response.data">
-    <app-car-display [car]="car"></app-car-display>
+<p>Displaying {{response.meta.count}} out of {{ response.meta.total }} cars from page {{response.meta.cur_page}}</p>
+<!-- <div class="row">
+    <div *ngFor="let car of response.data" class="col-sm-4">
+        <app-car-display [car]="car"></app-car-display>
+    </div>
+</div> -->
+
+<div class="card-columns">
+    <div *ngFor="let car of response.data" class="card">
+        <app-car-display [car]="car"></app-car-display>
+    </div>
 </div>
+
+
+
+<!-- <table>
+    <thead>
+        <th scope="col">Make</th>
+        <th scope="col">Model</th>
+        <th scope="col">VIN</th>
+        <th scope="col">Parts</th>
+        <th scope="col">url</th>
+    </thead>
+    <tbody>
+        <tr *ngFor="let car of response.data">
+        <td scope="col">{{car.makeName}}</td>
+        <td scope="col">{{car.model}}</td>
+        <td scope="col">{{car.vin}}</td>
+        <td scope="col">{{car.partsNames}}</td>
+        <td scope="col">{{car.url}}</td>
+        </tr>
+        <!-- <tr *ngFor="let car of response.data">
+            <app-car-display [car]="car"></app-car-display>
+        </tr> -->
+    <!-- </tbody>
+</table> --> 
+<!-- 
+<mat-card class="test-class" *ngFor="let car of response.data">
+    <mat-card-header>
+        <mat-card-title>{{ car.model }}</mat-card-title>
+        <mat-card-subtitle>{{ car.makeName }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <p>VIN: {{ car.vin }}</p>
+        <p *ngIf="car._parts.length!==0">Parts: {{ car.partsNames.join(', ') }}</p>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-button>Edit</button>
+        <button mat-button>Delete</button>
+    </mat-card-actions>
+</mat-card> -->
+
+<!-- <div *ngFor="let car of response.data">
+    <app-car-display [car]="car"></app-car-display>
+</div> -->

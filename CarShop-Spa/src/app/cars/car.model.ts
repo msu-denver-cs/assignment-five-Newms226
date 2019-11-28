@@ -3,12 +3,25 @@ export class Car {
         public id: Number,
         public model: string,
         public vin: Number,
-        public make: string,
-        public parts: string[],
-        
-        url: string,
-        makeId: Number,
-        createdAt: string,
-        updatedAt: string
+        public url: string,
+
+        public _make: NameAndID,
+        public _parts: NameAndID[],
     ) {}
+
+    get makeName(): string { return this._make.name }
+    get makeId(): number { return this._make.id}
+
+    get partsNames(): string[] {
+        return this._parts.map(part => part.name)
+    }
+    
+    get partsIds() {
+        return this._parts.map(part => part.id)
+    }
+}
+
+interface NameAndID {
+    name: string;
+    id: number;
 }

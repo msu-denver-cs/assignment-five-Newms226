@@ -1,8 +1,53 @@
-<div>
-  <button (click)="selected='cars'">Cars</button>
-  <button (click)="selected='makes'">Makes</button>
-  <button (click)="selected='parts'">Parts</button>
-  <button (click)="selected=''">API Connection Satuts</button>
+<!--Navbar-->
+<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark indigo">
+
+    <!-- Navbar brand -->
+    <!-- <mdb-navbar-brand><a class="navbar-brand" href="#">CarShop</a></mdb-navbar-brand>-->
+    <mdb-navbar-brand>
+        <a class="navbar-brand" href="#">
+            <img src="assets/icon/favicon-96x96.png" height="30" class="d-inline-block align-top" alt="">
+            CarShop
+        </a>
+    </mdb-navbar-brand>
+
+    <!-- Collapsible content -->
+    <links>
+        <!-- Links -->
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link waves-light" mdbWavesEffect (click)="selected='cars'">Cars</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link waves-light" mdbWavesEffect (click)="selected='makes'">Makes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link waves-light"  mdbWavesEffect (click)="selected='parts'">Parts</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link waves-light"  mdbWavesEffect (click)="selected=''">API Status</a>
+            </li>
+        </ul>
+        <!-- Links -->
+
+        <ul class="navbar-nav ml-auto nav-flex-icons">
+          <li class="nav-item">
+            <a class="nav-link" href="https://github.com/Newms226">
+              <mdb-icon fab icon="github"></mdb-icon>
+            </a>
+          </li>
+        </ul>
+    </links>
+    <!-- Collapsible content -->
+
+</mdb-navbar>
+<!--/.Navbar-->
+
+    <!-- <button (click)="selected='cars'" >Cars</button>
+    <button (click)="selected='makes'">Makes</button>
+    <button (click)="selected='parts'">Parts</button>
+    <button (click)="selected=''">API Connection Satuts</button> -->
+
+<div class="container">
   <div [ngSwitch]="selected">
     <div *ngSwitchCase="'cars'">
       <app-car-list></app-car-list>
