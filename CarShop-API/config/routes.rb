@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
+  get 'api/typeahead/cars', to: 'typeahead#cars'
+  get 'api/typeahead/parts', to: 'typeahead#parts'
+  get 'api/typeahead/makes', to: 'typeahead#makes'
+
   get 'api/status'
+ 
   root 'cars#index'
 
   scope :api do
