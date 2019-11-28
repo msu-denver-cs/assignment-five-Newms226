@@ -1,8 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatCardModule} from '@angular/material/card';
+
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
@@ -19,6 +19,7 @@ import { TableRootComponent } from './table/table-root/table-root.component';
 import { TableViewComponent } from './table/table-view/table-view.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './navbar/navbar.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,9 @@ import { NavbarComponent } from './navbar/navbar.component';
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MDBBootstrapModule.forRoot()
+    FormsModule,
+    MDBBootstrapModule.forRoot(),
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

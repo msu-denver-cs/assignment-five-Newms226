@@ -12,12 +12,20 @@ import { Query } from 'src/app/api/query/query.model';
 })
 export class CarListComponent implements OnInit {
   response: APIResponse<Car>;
+  _order: string;
+  public model: string;
+
+  get order() { return this._order }
+  set order(v) { this._order = v; console.log('NEW ORDER: ' + v);}
+
+  search = () => {[]}
 
   constructor(private apiService: ApiService) {
     this.response = {
       meta: { total: 0 },
       data: []
     }
+    this.order = ''
   }
 
   ngOnInit() {

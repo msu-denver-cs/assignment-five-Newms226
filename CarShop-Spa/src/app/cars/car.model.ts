@@ -16,7 +16,7 @@ export class Car {
         return this._parts.map(part => part.name)
     }
     
-    get partsIds() {
+    get partsIds(): number[] {
         return this._parts.map(part => part.id)
     }
 }

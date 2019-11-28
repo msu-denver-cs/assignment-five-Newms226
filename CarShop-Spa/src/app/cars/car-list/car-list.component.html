@@ -1,12 +1,64 @@
-<p>Displaying {{response.meta.count}} out of {{ response.meta.total }} cars from page {{response.meta.cur_page}}</p>
-<!-- <div class="row">
-    <div *ngFor="let car of response.data" class="col-sm-4">
-        <app-car-display [car]="car"></app-car-display>
-    </div>
-</div> -->
+<nav class="navbar sticky-top navbar-expand-md navbar-light bg-light">
+    <button class="navbar-toggler" type="button" aria-controls="navbarContent" [attr.aria-expanded]="!collapsed" aria-label="Toggle navigation" (click)="collapsed = !collapsed">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
+    <!-- Search -->
+    <div class="input-group">
+        <input id="typeahead-basic" 
+            type="text" 
+            class="form-control" 
+            [(ngModel)]="model" 
+            [ngbTypeahead]="search"
+            placeholder="model"
+        />
+        <input id="typeahead-basic" 
+            type="text" 
+            class="form-control" 
+            [(ngModel)]="model" 
+            [ngbTypeahead]="search"
+            placeholder="model"
+        />
+        <input id="typeahead-basic" 
+            type="text" 
+            class="form-control" 
+            [(ngModel)]="model" 
+            [ngbTypeahead]="search"
+            placeholder="model"
+        />
+        <input id="typeahead-basic" 
+            type="text" 
+            class="form-control" 
+            [(ngModel)]="model" 
+            [ngbTypeahead]="search"
+            placeholder="model"
+        />
+    </div>
+    
+    <!-- Collapsable Options -->
+    <div class="navbar-collapse" [class.collapse]="collapsed" id="navbarContent">
+        <ul class="navbar-nav ml-auto">
+        <!-- <label for="typeahead-basic">Search for a state:</label> -->
+        
+                
+    
+            <li class="nav-item" ngbDropdown display="dynamic" placement="bottom-right">
+                <a class="nav-link" style="cursor: pointer" ngbDropdownToggle id="navbarDropdown3" role="button">
+                    sort by
+                </a>
+                <div ngbDropdownMenu aria-labelledby="navbarDropdown3" class="dropdown-menu">
+                    <a ngbDropdownItem href="#" (click)="$event.preventDefault(); order='make'">make</a>
+                    <a ngbDropdownItem href="#" (click)="$event.preventDefault(); order='model'">model</a>
+                    <a ngbDropdownItem href="#" (click)="$event.preventDefault(); order='vin'">vin</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Car Card Display -->
 <div class="card-columns">
-    <div *ngFor="let car of response.data" class="card">
+    <div *ngFor="let car of response.data" class="card ">
         <app-car-display [car]="car"></app-car-display>
     </div>
 </div>

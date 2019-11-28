@@ -1,0 +1,14 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.navbar.second-navbar {
+    margin-top: 60px;
+    background: grey !important;
+    transition: all .5s ease-in-out;
+  }
+  
+  .navbar.second-navbar.top-nav-collapse {
+    margin-top: 45px;
+  }

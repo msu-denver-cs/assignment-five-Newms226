@@ -1,17 +1,24 @@
 Current Sprint
 
-1. Write Contoller Tests
-2. Configure TravisCI
-
-
 Next Sprints
+
+## curent tasks
+- sort column
+- infinite scroll
+- pop up exit modal
+- search
+  - typehead
+- authentication
+- dockerize
+- front-end tests
+
+
+
+
 
 ## 2 Chapters from ng
 JUST WORK ON IT DAMNIT
 ## Front end
-1. interface for api request
-2. new api service (inheritance?)
-3. have the cars model use it
 4. install ngb
 5. Configure pagination!
 6. Configure search
