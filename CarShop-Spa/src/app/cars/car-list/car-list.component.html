@@ -60,12 +60,17 @@
 </nav>
 
 <!-- Car Card Display -->
-<div class="card-columns">
-    <div *ngFor="let car of response.data" class="card ">
-        <app-car-display [car]="car"></app-car-display>
+<div *ngIf="response.meta.total != 0 else empty">
+    <div class="card-columns">
+        <div *ngFor="let car of response.data" class="card ">
+            <app-car-display [car]="car"></app-car-display>
+        </div>
     </div>
 </div>
 
+<ng-template #empty> 
+    <div>No results found</div>
+</ng-template>
 
 
 <!-- <table>

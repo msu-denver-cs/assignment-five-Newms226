@@ -32,7 +32,8 @@ export class CarListComponent implements OnInit {
   
   constructor(
     private apiService: ApiService, 
-    private typeahead: TypeaheadService) { }
+    private typeahead: TypeaheadService
+  ) { }
 
   ngOnInit() {
     this.response = {
@@ -55,18 +56,26 @@ export class CarListComponent implements OnInit {
   update() {
     console.log('query call')
     const query = {table: 'cars', params: this.state}
-    this.apiService.get<Car>(query).subscribe((data: APIResponse<Car>) => {
-      this.response = {
-        meta: data['meta'],
-        data: data.data.map(car => new Car(
-          car['id'],
-          car['model'],
-          car['vin'],
-          car['url'],
-          car['make'],
-          car['parts'],
-        ))
+    this.apiService.get<Car>(query).subscribe((resp: APIResponse<Car>) => {
+      if (resp.data.length > 0) {
+        this.response = {
+          meta: resp['meta'],
+          data: resp.data.map(car => new Car(
+            car['id'],
+            car['model'],
+            car['vin'],
+            car['url'],
+            car['make'],
+            car['parts'],
+          ))
+        }
+      } else {
+        this.response = {
+          meta: { total: 0 },
+          data: [] // this needs to a be a discernable item! like a symbol?
+        }
       }
+      
     })
   }
 
