@@ -10,15 +10,13 @@ module QueryGenerator
     calls << build_order_call(params, config)
 
     completed_query = run_query(query, calls)
-    meta = build_meta(completed_query)
+    meta = { total: completed_query.size }
 
+    paginate(completed_query, params, meta) # returns meta, query
+  end
 
-
-    if params[:page]
-      paginate(completed_query, params[:page], meta) # returns meta, query
-    else
-      return meta, completed_query
-    end
+  def self.paginate? params
+    params[:page] || params[:perpage]
   end
 
   # private
@@ -91,20 +89,21 @@ module QueryGenerator
       query
     end
 
-    def self.build_meta (query)
-      { total: query.size }
-    end
-
-    def self.paginate (query, page, meta)
-      query = query.page page
-
-      meta.merge!({
+    # Do we like this? I dont think so...
+   # TODO send back a more specific error message if the page is invalid? Shorten the param keys?
+    # right now, if you request an out of bound page, it responds with an empty data field! THIS IS BAD
+    def self.paginate (query, params, meta)
+      if params[:perpage] && params[:page]
+        query = query.page(params[:page]).per(params[:perpage])
+        meta = meta.merge!({
           paginated: true,
-          cur_page: page.to_i, # TODO sanitization?
-          per_page: Kaminari.config.default_per_page,
+          cur_page: params[:page].to_i, # TODO sanitization?
+          per_page: params[:perpage].to_i,
           count: query.size
-      })
-
-      return meta, query
+        })
+        return meta, query
+      else 
+        return meta, query
+      end
     end
 end

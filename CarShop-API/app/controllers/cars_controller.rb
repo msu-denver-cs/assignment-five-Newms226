@@ -6,10 +6,12 @@ class CarsController < ApplicationController
   # GET /cars
   def index
     @meta, @cars = Car.api_query search_params
+    render 'cars/index.json'
   end
 
   # GET /cars/1
   def show
+    render 'cars/show.json'
   end
 
   # POST /cars
@@ -50,7 +52,7 @@ class CarsController < ApplicationController
     end
 
     def search_params
-      params.permit(:model, :make, :vin, :part, :order, :page, :desc)
+      params.permit(:model, :make, :vin, :part, :order, :page, :desc, :perpage)
     end
 
 end
