@@ -72,7 +72,7 @@ export class CarListComponent implements OnInit {
       } else {
         this.response = {
           meta: { total: 0 },
-          data: [] // this needs to a be a discernable item! like a symbol?
+          data: [] // TODO this needs to a be a discernable item! like a symbol?
         }
       }
       

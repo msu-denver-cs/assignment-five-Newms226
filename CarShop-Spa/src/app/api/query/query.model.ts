@@ -5,6 +5,7 @@ export interface Query {
 
 export interface QueryParams {
     page?: number;
+    per_page?: number;
     order?: string;
     desc?: boolean;
 }
