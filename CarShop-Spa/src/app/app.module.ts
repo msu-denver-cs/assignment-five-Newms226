@@ -42,8 +42,7 @@ import { FormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     FormsModule,
     // MDBBootstrapModule.forRoot(),
-    NgbModule,
-    NgxMasonryModule
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]
