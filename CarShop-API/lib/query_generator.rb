@@ -93,12 +93,17 @@ module QueryGenerator
    # TODO send back a more specific error message if the page is invalid? Shorten the param keys?
     # right now, if you request an out of bound page, it responds with an empty data field! THIS IS BAD
     def self.paginate (query, params, meta)
-      if params[:perpage] && params[:page]
-        query = query.page(params[:page]).per(params[:perpage])
+      if  params[:page]
+        if params[:perpage]
+          query = query.page(params[:page]).per(params[:perpage])
+        else
+          query = query.page(params[:page])
+        end
+        
         meta = meta.merge!({
           paginated: true,
           cur_page: params[:page].to_i, # TODO sanitization?
-          per_page: params[:perpage].to_i,
+          per_page: query.size,
           count: query.size
         })
         return meta, query

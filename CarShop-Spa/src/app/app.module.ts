@@ -3,8 +3,9 @@ import { NgModule } from '@angular/core';
 
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+// import { MDBBootstrapModule } from 'angular-bootstrap-md';
 
-import { MDBBootstrapModule } from 'angular-bootstrap-md';
+
 
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -40,8 +41,9 @@ import { FormsModule } from '@angular/forms';
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
-    MDBBootstrapModule.forRoot(),
-    NgbModule
+    // MDBBootstrapModule.forRoot(),
+    NgbModule,
+    NgxMasonryModule
   ],
   providers: [],
   bootstrap: [AppComponent]

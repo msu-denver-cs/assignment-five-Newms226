@@ -3,11 +3,12 @@ Current Sprint
 Next Sprints
 
 ## curent tasks
-- sort column
+- load left to right, top down NOT top down, left to right
+- remove serach button and dymically request items based on
+  an observable linked to the model
+    user input > change in viewmodel > new query/api call > update display
 - infinite scroll
-- pop up exit modal
-- search
-  - typehead
+- pop up edit modal
 - authentication
 - dockerize
 - front-end tests
