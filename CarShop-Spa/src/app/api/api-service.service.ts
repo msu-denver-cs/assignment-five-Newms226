@@ -17,16 +17,18 @@ export class ApiService {
   }
 
   get<T>(query: Query): Observable<APIResponse<T>> {
-    return this.http.get<APIResponse<T>>(`${this.apiRoot}/${query.table}.json${this.queryToString(query)}`)
+    return this.http.get<APIResponse<T>>(
+      `${this.apiRoot}/${query.table}.json?${this.queryToString(query)}`
+    )
   }
 
   queryToString(query: Query): string {
     const paramStr = Object.entries(query.params)
-      .filter(([key, value]) => value || value === false) // TODO: remove spaces!!
+      .filter(([key, value]) => value !== '') // TODO: remove spaces!!
       .map(([key, value]) => `${key}=${value}`)
       .join('&');
     console.log('Read from param string: ' + paramStr);
-    return '?' + paramStr;
+    return paramStr;
     // for (const propertyKey in query.params) {
     //     const value = query[propertyKey];
     //     console.log('key: ' + propertyKey + ' value: ' + value);
