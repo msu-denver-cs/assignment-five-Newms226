@@ -7,6 +7,7 @@ import { CarTypeaheadService } from '../car-typeahead.service'
 import { Observable } from 'rxjs';
 import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
 import { CarSearchService } from '../car-search.service';
+import { NgxMasonryOptions } from 'ngx-masonry';
 
 
 @Component({
@@ -15,6 +16,22 @@ import { CarSearchService } from '../car-search.service';
   styleUrls: ['./car-list.component.scss']
 })
 export class CarListComponent implements OnInit {
+  public masonryOptions: NgxMasonryOptions = {
+		transitionDuration: '0.2s',
+		// gutter: 20,
+    // resize: true,
+    // columnWidth: '.block',
+    // itemSelector: '.block',
+    // percentPosition: true,
+		// initLayout: true,
+    // fitWidth: true,
+    // horizontalOrder: true,
+    // itemSelector: '.block',
+    // columnWidth: '.block',
+    // gutter: 25,
+    // percentPosition: true,
+	};
+
   // response: APIResponse<Car>;
   // public state: CarSearchState;
   cars$: Observable<Car[]>;

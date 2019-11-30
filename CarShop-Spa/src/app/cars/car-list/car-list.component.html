@@ -43,6 +43,8 @@
                     <button class="btn btn-success" (click)="update()">Search</button>
                 </div> -->
             </div>
+
+            <button (click)="search.loadMore()">Load more</button>
         
             <!-- Drop down options -->
             <li class="nav-item" ngbDropdown display="dynamic" placement="bottom-right">
@@ -59,14 +61,20 @@
     </div>
 </nav>
 
+
+
+
+
 <!-- Car Card Display -->
 <!-- <div *ngIf="response.meta.total != 0 else empty"> -->
 <!-- <div *ngIf="loading$ as boolean"> -->
-    <div class="card-columns">
-        <div *ngFor="let car of cars$ | async" class="card">
+<!-- <div class="container"> -->
+    <ngx-masonry class="grid" [options]="masonaryOptions">
+        <div ngxMasonryItem *ngFor="let car of cars$ | async">
             <app-car-display [car]="car"></app-car-display>
         </div>
-    </div>
+    </ngx-masonry>
+<!-- </div> -->
 <!-- </div> -->
 <!-- </div> -->
 

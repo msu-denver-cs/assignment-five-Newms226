@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 // import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { NgxMasonryModule } from 'ngx-masonry';
 
 
 
@@ -21,6 +22,7 @@ import { TableViewComponent } from './table/table-view/table-view.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FormsModule } from '@angular/forms';
+import { CarSearchBarComponent } from './cars/car-search-bar/car-search-bar.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ import { FormsModule } from '@angular/forms';
     PartDisplayComponent,
     TableRootComponent,
     TableViewComponent,
-    NavbarComponent
+    NavbarComponent,
+    CarSearchBarComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +45,8 @@ import { FormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     FormsModule,
     // MDBBootstrapModule.forRoot(),
-    NgbModule
+    NgbModule,
+    NgxMasonryModule
   ],
   providers: [],
   bootstrap: [AppComponent]
