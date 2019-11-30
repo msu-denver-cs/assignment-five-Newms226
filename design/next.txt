@@ -6,9 +6,6 @@ Next Sprints
 - load left to right, top down NOT top down, left to right
     if you move back to rows (from columns) and enforce a max part count, this coulld work?
       ? what about cars.parts.size < max
-- remove serach button and dymically request items based on
-  an observable linked to the model
-    user input > change in viewmodel > new query/api call > update display
 - infinite scroll
 - pop up edit modal
 - authentication

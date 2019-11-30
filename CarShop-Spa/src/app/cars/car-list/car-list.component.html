@@ -50,9 +50,9 @@
                     sort by
                 </a>
                 <div ngbDropdownMenu aria-labelledby="navbarDropdown3" class="dropdown-menu">
-                    <a ngbDropdownItem href="#" (click)="$event.preventDefault(); order='make'">make</a>
-                    <a ngbDropdownItem href="#" (click)="$event.preventDefault(); order='model'">model</a>
-                    <a ngbDropdownItem href="#" (click)="$event.preventDefault(); order='vin'">vin</a>
+                    <a ngbDropdownItem href="#" (click)="$event.preventDefault(); search.order='make'">make</a>
+                    <a ngbDropdownItem href="#" (click)="$event.preventDefault(); search.order='model'">model</a>
+                    <a ngbDropdownItem href="#" (click)="$event.preventDefault(); search.order='vin'">vin</a>
                 </div>
             </li>
         </ul>
@@ -61,11 +61,13 @@
 
 <!-- Car Card Display -->
 <!-- <div *ngIf="response.meta.total != 0 else empty"> -->
+<!-- <div *ngIf="loading$ as boolean"> -->
     <div class="card-columns">
         <div *ngFor="let car of cars$ | async" class="card">
             <app-car-display [car]="car"></app-car-display>
         </div>
     </div>
+<!-- </div> -->
 <!-- </div> -->
 
 <ng-template #empty> 

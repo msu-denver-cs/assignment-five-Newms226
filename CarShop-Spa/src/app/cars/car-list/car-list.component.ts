@@ -19,6 +19,7 @@ export class CarListComponent implements OnInit {
   // public state: CarSearchState;
   cars$: Observable<Car[]>;
   total$: Observable<number>;
+  // loading$: Observable<boolean>;
 
   // get order() { return this.state.model }
   // set order(v) { 
@@ -34,6 +35,7 @@ export class CarListComponent implements OnInit {
   { 
     this.cars$ = search.cars$;
     this.total$ = search.total$;
+    // this.loading$ = search.loading$;
   }
 
   ngOnInit() {

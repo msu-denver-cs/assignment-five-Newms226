@@ -58,6 +58,8 @@ export class CarSearchService {
   get total$() { return this._total$.asObservable(); }
   get count$() { return this._count$.asObservable(); }
   get loading$() { return this._loading$.asObservable(); }
+
+  get order() { return this._state.order}
   get page() { return this._state.page; }
   get perPage() { return this._state.perpage; }
 
@@ -77,7 +79,8 @@ export class CarSearchService {
 
   private _set(patch: Partial<CarSearchState>) {
     Object.assign(this._state, patch);
-    console.log('NEW STATE: ' + this._state)
+    console.log('NEW STATE: ');
+    console.log(this._state);
     this._search$.next();
   }
 
