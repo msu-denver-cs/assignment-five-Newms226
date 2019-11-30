@@ -1,11 +1,11 @@
 <!-- <div class="card"> -->
     <div class="card-body">
-        <h5 class="card-title">{{car.makeName}}</h5>
+        <h5 class="card-title">{{car.make.name}}</h5>
         <h3>{{car.model}}</h3>
         <p class="card-text"><small class="text-muted">VIN: {{car.vin}}</small></p>
         <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
         <ul class="list-group list-group-flush">
-            <li *ngFor="let part of car.partsNames" class="list-group-item">{{part}}</li>
+            <li *ngFor="let part of car.parts" class="list-group-item">{{part.name}}</li>
         </ul>
         <div class="card-body">
             <a href="#" class="card-link">Card link</a>

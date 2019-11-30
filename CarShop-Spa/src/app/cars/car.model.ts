@@ -1,24 +1,11 @@
-export class Car {
-    constructor(
-        public id: Number,
-        public model: string,
-        public vin: Number,
-        public url: string,
+export interface Car {
+    id: Number,
+    model: string,
+    vin: Number,
+    url: string,
 
-        public _make: NameAndID,
-        public _parts: NameAndID[],
-    ) {}
-
-    get makeName(): string { return this._make.name }
-    get makeId(): number { return this._make.id}
-
-    get partsNames(): string[] {
-        return this._parts.map(part => part.name)
-    }
-    
-    get partsIds(): number[] {
-        return this._parts.map(part => part.id)
-    }
+    make: NameAndID,
+    parts: NameAndID[],
 }
 
 interface NameAndID {

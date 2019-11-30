@@ -14,34 +14,34 @@
                 <input id="typeahead-basic" 
                     type="text" 
                     class="form-control" 
-                    [(ngModel)]="state.make" 
+                    [(ngModel)]="search.make" 
                     [ngbTypeahead]="typeahead.makes"
                     placeholder="make"
                 />
                 <input id="typeahead-basic" 
                     type="text" 
                     class="form-control" 
-                    [(ngModel)]="state.model" 
+                    [(ngModel)]="search.model" 
                     [ngbTypeahead]="typeahead.models"
                     placeholder="model"
                 />
                 <input id="typeahead-basic" 
                     type="text" 
                     class="form-control" 
-                    [(ngModel)]="state.vin" 
+                    [(ngModel)]="search.vin" 
                     [ngbTypeahead]="typeahead.vins"
                     placeholder="vin"
                 />
                 <input id="typeahead-basic" 
                     type="text" 
                     class="form-control" 
-                    [(ngModel)]="state.part" 
+                    [(ngModel)]="search.part" 
                     [ngbTypeahead]="typeahead.parts"
                     placeholder="part"
                 />
-                <div class="input-group-append">
+                <!-- <div class="input-group-append">
                     <button class="btn btn-success" (click)="update()">Search</button>
-                </div>
+                </div> -->
             </div>
         
             <!-- Drop down options -->
@@ -60,13 +60,13 @@
 </nav>
 
 <!-- Car Card Display -->
-<div *ngIf="response.meta.total != 0 else empty">
+<!-- <div *ngIf="response.meta.total != 0 else empty"> -->
     <div class="card-columns">
-        <div *ngFor="let car of response.data" class="card ">
+        <div *ngFor="let car of cars$ | async" class="card">
             <app-car-display [car]="car"></app-car-display>
         </div>
     </div>
-</div>
+<!-- </div> -->
 
 <ng-template #empty> 
     <div>No results found</div>

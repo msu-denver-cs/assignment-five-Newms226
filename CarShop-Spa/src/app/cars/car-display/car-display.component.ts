@@ -11,7 +11,5 @@ export class CarDisplayComponent implements OnInit {
   
   constructor() { }
 
-  ngOnInit() {
-  }
-
+  ngOnInit() { }
 }

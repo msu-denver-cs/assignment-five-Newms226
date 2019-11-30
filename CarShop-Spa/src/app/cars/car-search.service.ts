@@ -54,7 +54,7 @@ export class CarSearchService {
     this._search$.next();
   }
 
-  get countries$() { return this._cars$.asObservable(); }
+  get cars$() { return this._cars$.asObservable(); }
   get total$() { return this._total$.asObservable(); }
   get count$() { return this._count$.asObservable(); }
   get loading$() { return this._loading$.asObservable(); }
