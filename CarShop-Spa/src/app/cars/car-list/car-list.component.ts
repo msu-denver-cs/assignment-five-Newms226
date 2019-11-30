@@ -3,7 +3,7 @@ import { ApiService } from 'src/app/api/api-service.service';
 import { Car } from '../car.model'
 import { APIResponse } from 'src/app/api/query/query-response.model';
 import { Query, QueryParams } from 'src/app/api/query/query.model';
-import { TypeaheadService } from 'src/app/api/typeahead/typeahead.service';
+import { CarTypeaheadService } from '../car-typeahead.service'
 import { Observable } from 'rxjs';
 import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
 
@@ -32,7 +32,7 @@ export class CarListComponent implements OnInit {
   
   constructor(
     private apiService: ApiService, 
-    private typeahead: TypeaheadService
+    private typeahead: CarTypeaheadService
   ) { }
 
   ngOnInit() {
