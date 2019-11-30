@@ -7,12 +7,7 @@ import { CarTypeaheadService } from '../car-typeahead.service'
 import { Observable } from 'rxjs';
 import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
 
-interface CarSearchState extends QueryParams {
-  part: string;
-  make: string;
-  model: string;
-  vin: string;
-}
+
 
 @Component({
   selector: 'app-car-list',
