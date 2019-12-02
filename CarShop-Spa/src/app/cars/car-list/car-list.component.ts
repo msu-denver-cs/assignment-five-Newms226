@@ -7,6 +7,7 @@ import { CarSearchService } from '../car-search.service';
 import { NgxMasonryOptions } from 'ngx-masonry';
 import { EventEmitter } from 'events';
 import { take } from 'rxjs/operators';
+import { APIMeta } from 'src/app/api/query/query-response.model';
 
 
 @Component({
@@ -24,8 +25,7 @@ export class CarListComponent implements OnInit, AfterViewInit {
 
   // cars: Car[];
   cars$: Observable<Car[]>;
-  total$: Observable<number>;
-  count$: Observable<number>;
+  meta$: Observable<APIMeta>;
 
   private _scrollObserver: IntersectionObserver;
 
@@ -45,9 +45,8 @@ export class CarListComponent implements OnInit, AfterViewInit {
       threshold: .5
     };
 
-    this.total$ = this.search.total$;
-    this.count$ = this.search.count$;
-    this.cars$ = this.search.cars$;
+    this.cars$ = this.search.data$;
+    this.meta$ = this.search.meta$;
     // this.cars = [];
 
     // this.search.cars$.subscribe((cars: Car[]) => {

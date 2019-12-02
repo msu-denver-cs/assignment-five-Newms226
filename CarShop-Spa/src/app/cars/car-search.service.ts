@@ -6,7 +6,7 @@ import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
 import {debounceTime, delay, switchMap, tap, mergeMap} from 'rxjs/operators';
 
 import { Car } from './car.model';
-import { APIResponse } from '../api/query/query-response.model';
+import { APIResponse, APIMeta } from '../api/query/query-response.model';
 import { QueryParams } from '../api/query/query.model'
 import { ApiService } from '../api/api-service.service';
 
@@ -24,10 +24,13 @@ export interface CarSearchState extends QueryParams {
 export class CarSearchService {
   private _loading$ = new BehaviorSubject<boolean>(true);
   private _search$ = new Subject<void>();
-  private _total$ = new BehaviorSubject<number>(0);
-  private _count$ = new BehaviorSubject<number>(0);
+  // private _total$ = new BehaviorSubject<number>(0);
+  // private _count$ = new BehaviorSubject<number>(0);
 
-  private _cars$ = new BehaviorSubject<Car[]>([]);
+  private _data$ = new BehaviorSubject<Car[]>([]);
+  private _meta$ = new BehaviorSubject<APIMeta>({
+    total: 0
+  });
 
   private _state: CarSearchState = {
     page: 0,
@@ -53,9 +56,10 @@ export class CarSearchService {
     // this._search$.next();
   }
 
-  get cars$() { return this._cars$.asObservable(); }
-  get total$() { return this._total$.asObservable(); }
-  get count$() { return this._count$.asObservable(); }
+  get data$() { return this._data$.asObservable(); }
+  get meta$() { return this._meta$.asObservable(); }
+  // get total$() { return this._total$.asObservable(); }
+  // get count$() { return this._count$.asObservable(); }
   get loading$() { return this._loading$.asObservable(); }
 
   get order() { return this._state.order}
@@ -83,6 +87,14 @@ export class CarSearchService {
     this._search().subscribe(response => this._append(response))
   }
 
+  hasMore() {
+    if (this._meta$.value.count) {
+      return this._meta$.value.total > this._meta$.value.count;
+    } else { 
+      return false; 
+    } 
+  }
+
   private _set(patch: Partial<CarSearchState>) {
     Object.assign(this._state, patch);
     this.page = 1;
@@ -95,19 +107,19 @@ export class CarSearchService {
     const query = {
       table: 'cars',
       params: this._state
-    }
+    };
 
     return this.api.get<Car>(query);
   }
 
   private _parse(result: APIResponse<Car>) {
-    this._cars$.next(result.data);
-    this._total$.next(result.meta.total);
-    this._count$.next(result.meta.count);
+    this._data$.next(result.data);
+    this._meta$.next(result.meta);
   }
 
   private _append(result: APIResponse<Car>) {
-    let data = this._cars$.value.concat(result.data);
-    this._cars$.next(data);
+    let data = this._data$.value.concat(result.data);
+    this._data$.next(data);
+    this._meta$.next(result.meta);
   }
 }

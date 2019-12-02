@@ -76,7 +76,9 @@
             <app-car-display class='block-item' [car]="car"></app-car-display>
         </div>
     </ngx-masonry>
-    <div #anchorLast>Loading...</div>
+    <div #anchorLast>
+        <div *ngIf="search.loading$ | async else empty"> Loading</div>
+    </div> 
 </div>
 <!-- </div> -->
 <!-- </div> -->
