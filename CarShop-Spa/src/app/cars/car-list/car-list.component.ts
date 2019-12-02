@@ -1,13 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Output, AfterViewInit } from '@angular/core';
 import { ApiService } from 'src/app/api/api-service.service';
 import { Car } from '../car.model'
-import { APIResponse } from 'src/app/api/query/query-response.model';
-import { Query, QueryParams } from 'src/app/api/query/query.model';
 import { CarTypeaheadService } from '../car-typeahead.service'
 import { Observable } from 'rxjs';
-import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
 import { CarSearchService } from '../car-search.service';
 import { NgxMasonryOptions } from 'ngx-masonry';
+import { EventEmitter } from 'events';
+import { take } from 'rxjs/operators';
 
 
 @Component({
@@ -15,88 +14,76 @@ import { NgxMasonryOptions } from 'ngx-masonry';
   templateUrl: './car-list.component.html',
   styleUrls: ['./car-list.component.scss']
 })
-export class CarListComponent implements OnInit {
+export class CarListComponent implements OnInit, AfterViewInit {
   public masonryOptions: NgxMasonryOptions = {
 		transitionDuration: '0.2s',
-		// gutter: 20,
-    // resize: true,
-    // columnWidth: '.block',
-    // itemSelector: '.block',
-    // percentPosition: true,
-		// initLayout: true,
-    // fitWidth: true,
-    // horizontalOrder: true,
-    // itemSelector: '.block',
-    // columnWidth: '.block',
-    // gutter: 25,
-    // percentPosition: true,
-	};
+  };
+  
+  @ViewChild('anchorLast', {static: false}) anchor: ElementRef<HTMLElement>
+  @Output() scrolled = new EventEmitter
 
-  // response: APIResponse<Car>;
-  // public state: CarSearchState;
+  // cars: Car[];
   cars$: Observable<Car[]>;
   total$: Observable<number>;
-  // loading$: Observable<boolean>;
+  count$: Observable<number>;
 
-  // get order() { return this.state.model }
-  // set order(v) { 
-  //   this.state.order = v; 
-  //   console.log('NEW ORDER: ' + v);
-  //   this.update();
-  // }
+  private _scrollObserver: IntersectionObserver;
+
+  private pastFirstLoad: boolean = false;
+
+  //
+
   
   constructor(
-    private apiService: ApiService, 
     private typeahead: CarTypeaheadService,
-    private search: CarSearchService) 
-  { 
-    this.cars$ = search.cars$;
-    this.total$ = search.total$;
-    // this.loading$ = search.loading$;
-  }
+    private search: CarSearchService,
+    private host: ElementRef) { }
 
   ngOnInit() {
-    // this.response = {
-    //   meta: { total: 0 },
-    //   data: []
-    // }
-    // this.state = {
-    //   part: '',
-    //   make: '',
-    //   model: '',
-    //   vin: '',
-    //   page: 1,
-    //   order: ''
-    // }
-    
-    // this.update()
-    // console.log('ngOnInit call')
+    const options = {
+      root: null,
+      threshold: .5
+    };
+
+    this.total$ = this.search.total$;
+    this.count$ = this.search.count$;
+    this.cars$ = this.search.cars$;
+    // this.cars = [];
+
+    // this.search.cars$.subscribe((cars: Car[]) => {
+    //   this.pastFirstLoad = true;
+    //   this.cars = this.cars.concat(cars);
+    // })
+
+    this._scrollObserver = new IntersectionObserver(([entry]) => {
+      console.log('Inside intersection observer...')
+        if (entry.isIntersecting){
+          console.log('INTERSECTION');
+          if (this.pastFirstLoad) {
+            console.log('PAST FIRST LOAD');
+            this.search.loadMore();
+          }
+        }
+      }, options);
+
+    // this._scrollObserver.observe(this.anchor.nativeElement);
+
   }
 
-  // update() {
-  //   console.log('query call')
-  //   const query = {table: 'cars', params: this.state}
-  //   this.apiService.get<Car>(query).subscribe((resp: APIResponse<Car>) => {
-  //     if (resp.data.length > 0) {
-  //       this.response = {
-  //         meta: resp['meta'],
-  //         data: resp.data.map(car => new Car(
-  //           car['id'],
-  //           car['model'],
-  //           car['vin'],
-  //           car['url'],
-  //           car['make'],
-  //           car['parts'],
-  //         ))
-  //       }
-  //     } else {
-  //       this.response = {
-  //         meta: { total: 0 },
-  //         data: [] // TODO this needs to a be a discernable item! like a symbol?
-  //       }
-  //     }
-      
-  //   })
-  // }
+  changeOrder(order: string) {
+    this.search.order = order
+    this.search.page = 1
+  }
+
+  ngAfterViewInit() {
+    console.log('NG AFTER VIEW INIT')
+    this._scrollObserver.observe(this.anchor.nativeElement);
+
+    this.cars$.pipe(take(1)).subscribe(_ => {
+      console.log('SET past first load')
+      this.pastFirstLoad = true;
+    })
+  }
+
 
 }

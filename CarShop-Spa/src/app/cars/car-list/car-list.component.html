@@ -1,4 +1,5 @@
-<nav class="navbar sticky-top navbar-expand-md navbar-light bg-light">
+<nav class="navbar navbar-expand-md navbar-light bg-light">
+    <a class="navbar-brand d-sm-bloc d-md-none" href="#">Search</a>
     <button class="navbar-toggler" type="button" aria-controls="navbarContent" 
         [attr.aria-expanded]="!collapsed" aria-label="Toggle navigation" 
         (click)="collapsed = !collapsed">
@@ -52,9 +53,9 @@
                     sort by
                 </a>
                 <div ngbDropdownMenu aria-labelledby="navbarDropdown3" class="dropdown-menu">
-                    <a ngbDropdownItem href="#" (click)="$event.preventDefault(); search.order='make'">make</a>
-                    <a ngbDropdownItem href="#" (click)="$event.preventDefault(); search.order='model'">model</a>
-                    <a ngbDropdownItem href="#" (click)="$event.preventDefault(); search.order='vin'">vin</a>
+                    <a ngbDropdownItem href="#" (click)="changeOrder('make')">make</a>
+                    <a ngbDropdownItem href="#" (click)="changeOrder('model')">model</a>
+                    <a ngbDropdownItem href="#" (click)="changeOrder('vin')">vin</a>
                 </div>
             </li>
         </ul>
@@ -69,11 +70,14 @@
 <!-- <div *ngIf="response.meta.total != 0 else empty"> -->
 <!-- <div *ngIf="loading$ as boolean"> -->
 <!-- <div class="container"> -->
+<div>
     <ngx-masonry class="grid" [options]="masonaryOptions">
-        <div ngxMasonryItem *ngFor="let car of cars$ | async">
-            <app-car-display [car]="car"></app-car-display>
+        <div ngxMasonryItem class='block col-lg-4 col-md-6' *ngFor="let car of cars$ | async">
+            <app-car-display class='block-item' [car]="car"></app-car-display>
         </div>
     </ngx-masonry>
+    <div #anchorLast>Loading...</div>
+</div>
 <!-- </div> -->
 <!-- </div> -->
 <!-- </div> -->
@@ -85,6 +89,7 @@
 <ng-template #loading> 
     <div>Loading</div>
 </ng-template>
+
 
 
 <!-- <table>

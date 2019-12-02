@@ -12,3 +12,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   .navbar.second-navbar.top-nav-collapse {
     margin-top: 45px;
   }
+
+  * {
+    box-sizing: border-box;
+  }

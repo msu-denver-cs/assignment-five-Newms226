@@ -3,10 +3,7 @@ Current Sprint
 Next Sprints
 
 ## curent tasks
-- load left to right, top down NOT top down, left to right
-    if you move back to rows (from columns) and enforce a max part count, this coulld work?
-      ? what about cars.parts.size < max
-- infinite scroll
+- Extrapolate and make generic. Use for parts and makes.
 - pop up edit modal
 - authentication
 - dockerize

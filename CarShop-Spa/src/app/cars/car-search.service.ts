@@ -28,10 +28,9 @@ export class CarSearchService {
   private _count$ = new BehaviorSubject<number>(0);
 
   private _cars$ = new BehaviorSubject<Car[]>([]);
-  private _last$ = new BehaviorSubject<Car>(null); // TODO this is probably a bad idea
 
   private _state: CarSearchState = {
-    page: 1,
+    page: 0,
     perpage: 24,
     part: '',
     make: '',
@@ -51,7 +50,7 @@ export class CarSearchService {
       this._parse(result);
     });
     
-    this._search$.next();
+    // this._search$.next();
   }
 
   get cars$() { return this._cars$.asObservable(); }
@@ -79,16 +78,14 @@ export class CarSearchService {
   set page(page: number) { this._state.page = page }
 
   loadMore() {
+    console.log('loading more'); // TODO: page out of bounds
     this.page++;
-    this._search().subscribe((result: APIResponse<Car>) => {
-      this._append(result);
-    });
+    this._search().subscribe(response => this._append(response))
   }
-
-  // set page(page: number) { this._set_page({page}); }
 
   private _set(patch: Partial<CarSearchState>) {
     Object.assign(this._state, patch);
+    this.page = 1;
     console.log('NEW STATE: ');
     console.log(this._state);
     this._search$.next();
@@ -104,24 +101,13 @@ export class CarSearchService {
   }
 
   private _parse(result: APIResponse<Car>) {
-    const data: Car[] = result.data.slice(0, result.data.length - 2);
-    const last: Car = result.data[result.data.length - 1];
-
-    this._last$.next(last);
-    this._cars$.next(data);
+    this._cars$.next(result.data);
     this._total$.next(result.meta.total);
     this._count$.next(result.meta.count);
   }
 
   private _append(result: APIResponse<Car>) {
-    let data: Car[] = result.data.slice(0, result.data.length - 2);
-    const last: Car = result.data[result.data.length - 1];
-
-    data = this._cars$.value.concat(data);
-
-    this._last$.next(last);
+    let data = this._cars$.value.concat(result.data);
     this._cars$.next(data);
-    this._total$.next(result.meta.total);
-    this._count$.next(result.meta.count);
   }
 }
