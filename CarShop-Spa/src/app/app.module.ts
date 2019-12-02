@@ -23,6 +23,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FormsModule } from '@angular/forms';
 import { CarSearchBarComponent } from './cars/car-search-bar/car-search-bar.component';
+import { AbstractListComponent } from './api/list/list.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { CarSearchBarComponent } from './cars/car-search-bar/car-search-bar.comp
     TableRootComponent,
     TableViewComponent,
     NavbarComponent,
-    CarSearchBarComponent
+    CarSearchBarComponent,
+    AbstractListComponent
   ],
   imports: [
     BrowserModule,

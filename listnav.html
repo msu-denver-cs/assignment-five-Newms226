@@ -59,21 +59,3 @@
         </ul>
     </div>
 </nav>
-
-<!-- Car Card Display -->
-<div>
-    <ngx-masonry class="grid" [options]="masonaryOptions">
-        <div ngxMasonryItem class='block col-lg-4 col-md-6' *ngFor="let car of data$ | async">
-            <app-car-display class='block-item' [car]="car"></app-car-display>
-        </div>
-    </ngx-masonry>
-    <div #anchorLast>
-        <div *ngIf="search.loading$ | async else empty">
-            loading...
-        </div>
-    </div> 
-</div>
-
-<ng-template #empty> 
-    <div>No results found</div>
-</ng-template>
