@@ -17,7 +17,7 @@ import { AbstractListComponent } from 'src/app/api/list/list.component';
   styleUrls: ['./car-list.component.scss']
 })
 export class CarListComponent extends AbstractListComponent<Car, CarSearchState> {
-  constructor(private typeahead: CarTypeaheadService,search: CarSearchService){
+  constructor(private typeahead: CarTypeaheadService, search: CarSearchService){
     super(search)
   }
 }

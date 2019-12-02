@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { Car } from './car.model';
 import { QueryParams } from '../api/query/query.model'
-import { SearchService } from './search.service';
+import { SearchService } from '../api/search.service';
 import { ApiService } from '../api/api-service.service';
 
 

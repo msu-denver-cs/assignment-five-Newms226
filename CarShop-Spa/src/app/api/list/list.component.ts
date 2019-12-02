@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { NgxMasonryOptions } from 'ngx-masonry';
 
 import { APIMeta } from 'src/app/api/query/query-response.model';
-import { SearchService } from 'src/app/cars/search.service';
+import { SearchService } from 'src/app/api/search.service';
 
 @Component({
   template: ''
