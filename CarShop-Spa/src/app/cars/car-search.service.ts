@@ -1,6 +1,6 @@
 // inspiration: https://ng-bootstrap.github.io/#/components/table/examples#complete
 import { Injectable, PipeTransform } from '@angular/core';
-import {DecimalPipe} from '@angular/common';
+import {DecimalPipe, TranslationWidth} from '@angular/common';
 
 import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
 import {debounceTime, delay, switchMap, tap, mergeMap} from 'rxjs/operators';
@@ -24,6 +24,7 @@ export interface CarSearchState extends QueryParams {
 export class CarSearchService {
   private _loading$ = new BehaviorSubject<boolean>(true);
   private _search$ = new Subject<void>();
+  private _paginator$ = new Subject<void>();
   // private _total$ = new BehaviorSubject<number>(0);
   // private _count$ = new BehaviorSubject<number>(0);
 
@@ -32,8 +33,10 @@ export class CarSearchService {
     total: 0
   });
 
+  public pastFirstLoad: boolean = false;
+
   private _state: CarSearchState = {
-    page: 0,
+    page: 1,
     perpage: 24,
     part: '',
     make: '',
@@ -50,10 +53,24 @@ export class CarSearchService {
       delay(200),
       tap(() => this._loading$.next(false))
     ).subscribe((result: APIResponse<Car>) => {
+      console.log('INIT LOAD');
       this._parse(result);
+      this.pastFirstLoad = true;
+      console.log('SET past first load');
+    });
+
+    this._paginator$.pipe(
+      tap(() => this._loading$.next(true)),
+      // debounceTime(200),
+      switchMap(() => this._search()),
+      // delay(200),
+      tap(() => this._loading$.next(false))
+    ).subscribe((result: APIResponse<Car>) => {
+      console.log('NEW LOAD')
+      this._append(result);
     });
     
-    // this._search$.next();
+    this._search$.next();
   }
 
   get data$() { return this._data$.asObservable(); }
@@ -82,9 +99,9 @@ export class CarSearchService {
   set page(page: number) { this._state.page = page }
 
   loadMore() {
-    console.log('loading more'); // TODO: page out of bounds
+    // console.log('loading more'); // TODO: page out of bounds
     this.page++;
-    this._search().subscribe(response => this._append(response))
+    this._paginator$.next();
   }
 
   hasMore() {

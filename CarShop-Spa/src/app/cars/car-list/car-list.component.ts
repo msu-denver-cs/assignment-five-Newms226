@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { CarSearchService } from '../car-search.service';
 import { NgxMasonryOptions } from 'ngx-masonry';
 import { EventEmitter } from 'events';
-import { take } from 'rxjs/operators';
+import { take, defaultIfEmpty, delay } from 'rxjs/operators';
 import { APIMeta } from 'src/app/api/query/query-response.model';
 
 
@@ -28,8 +28,9 @@ export class CarListComponent implements OnInit, AfterViewInit {
   meta$: Observable<APIMeta>;
 
   private _scrollObserver: IntersectionObserver;
+  private _isLeaving: boolean = true;
 
-  private pastFirstLoad: boolean = false;
+  // private pastFirstLoad: boolean = false;
 
   //
 
@@ -55,13 +56,16 @@ export class CarListComponent implements OnInit, AfterViewInit {
     // })
 
     this._scrollObserver = new IntersectionObserver(([entry]) => {
-      console.log('Inside intersection observer...')
-        if (entry.isIntersecting){
+      // console.log('Inside intersection observer...')
+        if (entry.isIntersecting && !this._isLeaving){
           console.log('INTERSECTION');
-          if (this.pastFirstLoad) {
+          this._isLeaving = true;
+          if (this.search.pastFirstLoad) {
             console.log('PAST FIRST LOAD');
             this.search.loadMore();
           }
+        } else if (this._isLeaving) {
+          this._isLeaving = false;
         }
       }, options);
 
@@ -76,11 +80,12 @@ export class CarListComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     console.log('NG AFTER VIEW INIT')
-    this._scrollObserver.observe(this.anchor.nativeElement);
+    
 
     this.cars$.pipe(take(1)).subscribe(_ => {
-      console.log('SET past first load')
-      this.pastFirstLoad = true;
+      
+      
+      this._scrollObserver.observe(this.anchor.nativeElement);
     })
   }
 
