@@ -1,9 +1,8 @@
 // inspiration: https://ng-bootstrap.github.io/#/components/table/examples#complete
-import { Injectable, PipeTransform } from '@angular/core';
-import {DecimalPipe, TranslationWidth} from '@angular/common';
+import { Injectable } from '@angular/core';
 
-import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
-import {debounceTime, delay, switchMap, tap, mergeMap} from 'rxjs/operators';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
+import {debounceTime, delay, switchMap, tap} from 'rxjs/operators';
 
 import { Car } from './car.model';
 import { APIResponse, APIMeta } from '../api/query/query-response.model';
@@ -25,15 +24,14 @@ export class CarSearchService {
   private _loading$ = new BehaviorSubject<boolean>(true);
   private _search$ = new Subject<void>();
   private _paginator$ = new Subject<void>();
-  // private _total$ = new BehaviorSubject<number>(0);
-  // private _count$ = new BehaviorSubject<number>(0);
 
   private _data$ = new BehaviorSubject<Car[]>([]);
   private _meta$ = new BehaviorSubject<APIMeta>({
     total: 0
   });
 
-  public pastFirstLoad: boolean = false;
+  private _pastFirstLoad: boolean = false;
+
 
   private _state: CarSearchState = {
     page: 1,
@@ -55,15 +53,12 @@ export class CarSearchService {
     ).subscribe((result: APIResponse<Car>) => {
       console.log('INIT LOAD');
       this._parse(result);
-      this.pastFirstLoad = true;
-      console.log('SET past first load');
+      this._pastFirstLoad = true;
     });
 
     this._paginator$.pipe(
       tap(() => this._loading$.next(true)),
-      // debounceTime(200),
       switchMap(() => this._search()),
-      // delay(200),
       tap(() => this._loading$.next(false))
     ).subscribe((result: APIResponse<Car>) => {
       console.log('NEW LOAD')
@@ -75,12 +70,11 @@ export class CarSearchService {
 
   get data$() { return this._data$.asObservable(); }
   get meta$() { return this._meta$.asObservable(); }
-  // get total$() { return this._total$.asObservable(); }
-  // get count$() { return this._count$.asObservable(); }
   get loading$() { return this._loading$.asObservable(); }
 
   get order() { return this._state.order}
   get perPage() { return this._state.perpage; }
+  get pastFirstLoad(): boolean { return this._pastFirstLoad; }
 
   get make() { return this._state.make; }
   get model() { return this._state.model; }
@@ -99,12 +93,13 @@ export class CarSearchService {
   set page(page: number) { this._state.page = page }
 
   loadMore() {
-    // console.log('loading more'); // TODO: page out of bounds
+    // TODO: page out of bounds
     this.page++;
     this._paginator$.next();
   }
 
   hasMore() {
+    console.log(`TOTAL: ${this._meta$.value.total} COUNT: ${this._meta$.value.count}`)
     if (this._meta$.value.count) {
       return this._meta$.value.total > this._meta$.value.count;
     } else { 

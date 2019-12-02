@@ -44,8 +44,6 @@
                     <button class="btn btn-success" (click)="update()">Search</button>
                 </div> -->
             </div>
-
-            <button (click)="search.loadMore()">Load more</button>
         
             <!-- Drop down options -->
             <li class="nav-item" ngbDropdown display="dynamic" placement="bottom-right">
@@ -77,7 +75,9 @@
         </div>
     </ngx-masonry>
     <div #anchorLast>
-        <div *ngIf="search.loading$ | async else empty"> Loading</div>
+        <div *ngIf="search.loading$ | async else empty">
+            loading...
+        </div>
     </div> 
 </div>
 <!-- </div> -->
@@ -88,9 +88,6 @@
     <div>No results found</div>
 </ng-template>
 
-<ng-template #loading> 
-    <div>Loading</div>
-</ng-template>
 
 
 

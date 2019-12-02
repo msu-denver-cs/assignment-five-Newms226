@@ -1,13 +1,13 @@
-import { Component, OnInit, ViewChild, ElementRef, Output, AfterViewInit } from '@angular/core';
-import { ApiService } from 'src/app/api/api-service.service';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+
+import { Observable } from 'rxjs';
+
+import { NgxMasonryOptions } from 'ngx-masonry';
+
+import { CarSearchService } from '../car-search.service';
+import { APIMeta } from 'src/app/api/query/query-response.model';
 import { Car } from '../car.model'
 import { CarTypeaheadService } from '../car-typeahead.service'
-import { Observable } from 'rxjs';
-import { CarSearchService } from '../car-search.service';
-import { NgxMasonryOptions } from 'ngx-masonry';
-import { EventEmitter } from 'events';
-import { take, defaultIfEmpty, delay } from 'rxjs/operators';
-import { APIMeta } from 'src/app/api/query/query-response.model';
 
 
 @Component({
@@ -21,56 +21,34 @@ export class CarListComponent implements OnInit, AfterViewInit {
   };
   
   @ViewChild('anchorLast', {static: false}) anchor: ElementRef<HTMLElement>
-  @Output() scrolled = new EventEmitter
 
-  // cars: Car[];
   cars$: Observable<Car[]>;
   meta$: Observable<APIMeta>;
 
   private _scrollObserver: IntersectionObserver;
   private _isLeaving: boolean = true;
-
-  // private pastFirstLoad: boolean = false;
-
-  //
-
   
   constructor(
     private typeahead: CarTypeaheadService,
-    private search: CarSearchService,
-    private host: ElementRef) { }
+    private search: CarSearchService) { }
 
   ngOnInit() {
+    this.cars$ = this.search.data$;
+    this.meta$ = this.search.meta$;
+
     const options = {
       root: null,
       threshold: .5
     };
 
-    this.cars$ = this.search.data$;
-    this.meta$ = this.search.meta$;
-    // this.cars = [];
-
-    // this.search.cars$.subscribe((cars: Car[]) => {
-    //   this.pastFirstLoad = true;
-    //   this.cars = this.cars.concat(cars);
-    // })
-
     this._scrollObserver = new IntersectionObserver(([entry]) => {
-      // console.log('Inside intersection observer...')
-        if (entry.isIntersecting && !this._isLeaving){
-          console.log('INTERSECTION');
-          this._isLeaving = true;
-          if (this.search.pastFirstLoad) {
-            console.log('PAST FIRST LOAD');
-            this.search.loadMore();
-          }
-        } else if (this._isLeaving) {
-          this._isLeaving = false;
-        }
-      }, options);
-
-    // this._scrollObserver.observe(this.anchor.nativeElement);
-
+      if (entry.isIntersecting && this.search.pastFirstLoad && !this._isLeaving) {
+        this._isLeaving = true;
+        this.search.loadMore();
+      } else if (this._isLeaving) {
+        this._isLeaving = false;
+      }
+    }, options);
   }
 
   changeOrder(order: string) {
@@ -79,14 +57,7 @@ export class CarListComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    console.log('NG AFTER VIEW INIT')
-    
-
-    this.cars$.pipe(take(1)).subscribe(_ => {
-      
-      
-      this._scrollObserver.observe(this.anchor.nativeElement);
-    })
+    this._scrollObserver.observe(this.anchor.nativeElement);
   }
 
 
