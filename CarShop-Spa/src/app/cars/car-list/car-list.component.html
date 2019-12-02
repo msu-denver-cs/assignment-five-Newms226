@@ -60,14 +60,7 @@
     </div>
 </nav>
 
-
-
-
-
 <!-- Car Card Display -->
-<!-- <div *ngIf="response.meta.total != 0 else empty"> -->
-<!-- <div *ngIf="loading$ as boolean"> -->
-<!-- <div class="container"> -->
 <div>
     <ngx-masonry class="grid" [options]="masonaryOptions">
         <div ngxMasonryItem class='block col-lg-4 col-md-6' *ngFor="let car of cars$ | async">
@@ -80,54 +73,7 @@
         </div>
     </div> 
 </div>
-<!-- </div> -->
-<!-- </div> -->
-<!-- </div> -->
 
 <ng-template #empty> 
     <div>No results found</div>
 </ng-template>
-
-
-
-
-<!-- <table>
-    <thead>
-        <th scope="col">Make</th>
-        <th scope="col">Model</th>
-        <th scope="col">VIN</th>
-        <th scope="col">Parts</th>
-        <th scope="col">url</th>
-    </thead>
-    <tbody>
-        <tr *ngFor="let car of response.data">
-        <td scope="col">{{car.makeName}}</td>
-        <td scope="col">{{car.model}}</td>
-        <td scope="col">{{car.vin}}</td>
-        <td scope="col">{{car.partsNames}}</td>
-        <td scope="col">{{car.url}}</td>
-        </tr>
-        <!-- <tr *ngFor="let car of response.data">
-            <app-car-display [car]="car"></app-car-display>
-        </tr> -->
-    <!-- </tbody>
-</table> --> 
-<!-- 
-<mat-card class="test-class" *ngFor="let car of response.data">
-    <mat-card-header>
-        <mat-card-title>{{ car.model }}</mat-card-title>
-        <mat-card-subtitle>{{ car.makeName }}</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-        <p>VIN: {{ car.vin }}</p>
-        <p *ngIf="car._parts.length!==0">Parts: {{ car.partsNames.join(', ') }}</p>
-    </mat-card-content>
-    <mat-card-actions>
-        <button mat-button>Edit</button>
-        <button mat-button>Delete</button>
-    </mat-card-actions>
-</mat-card> -->
-
-<!-- <div *ngFor="let car of response.data">
-    <app-car-display [car]="car"></app-car-display>
-</div> -->

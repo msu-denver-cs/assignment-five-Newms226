@@ -32,7 +32,6 @@ export class CarSearchService {
 
   private _pastFirstLoad: boolean = false;
 
-
   private _state: CarSearchState = {
     page: 1,
     perpage: 24,
@@ -92,13 +91,13 @@ export class CarSearchService {
   get page() { return this._state.page; }
   set page(page: number) { this._state.page = page }
 
-  loadMore() {
+  loadMore(): void {
     // TODO: page out of bounds
     this.page++;
     this._paginator$.next();
   }
 
-  hasMore() {
+  hasMore(): boolean {
     console.log(`TOTAL: ${this._meta$.value.total} COUNT: ${this._meta$.value.count}`)
     if (this._meta$.value.count) {
       return this._meta$.value.total > this._meta$.value.count;
@@ -107,7 +106,7 @@ export class CarSearchService {
     } 
   }
 
-  private _set(patch: Partial<CarSearchState>) {
+  private _set(patch: Partial<CarSearchState>): void {
     Object.assign(this._state, patch);
     this.page = 1;
     console.log('NEW STATE: ');
@@ -124,12 +123,12 @@ export class CarSearchService {
     return this.api.get<Car>(query);
   }
 
-  private _parse(result: APIResponse<Car>) {
+  private _parse(result: APIResponse<Car>): void {
     this._data$.next(result.data);
     this._meta$.next(result.meta);
   }
 
-  private _append(result: APIResponse<Car>) {
+  private _append(result: APIResponse<Car>): void {
     let data = this._data$.value.concat(result.data);
     this._data$.next(data);
     this._meta$.next(result.meta);
