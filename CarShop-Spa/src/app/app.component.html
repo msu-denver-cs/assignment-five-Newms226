@@ -1,29 +1,37 @@
 
 <nav class="navbar navbar-expand-md navbar-dark indigo">
-  <a class="navbar-brand" href="#">Navbar</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
+  <div class="navbar-brand" href="">
+      <img src="assets/icon/favicon-32x32.png" width="30" height="30" class="d-inline-block align-top" alt="">
+      CarShop
+  </div>
+  
+  <button class="navbar-toggler" type="button" aria-controls="navbarContent" 
+      [attr.aria-expanded]="!collapsed" aria-label="Toggle navigation" 
+      (click)="collapsed = !collapsed">
+      <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    
+  <!-- Collapsable Options -->
+  <div class="navbar-collapse" [class.collapse]="collapsed" id="navbarContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      <li class="nav-item active" (click)="selected = 'cars'">
+        <div class="nav-link">Cars</div>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
+      <li class="nav-item" (click)="selected = 'makes'">
+        <div class="nav-link">Makes</div>
       </li>
       
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+      <li class="nav-item" (click)="selected = 'parts'"> 
+        <div class="nav-link">Parts</div>
       </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
   </div>
-</nav>
+  <a style="font-size: 2em; color: white;" href="https://github.com/Newms226/CarShop">
+      <i class="fab fa-github"></i>
+  </a>
+  
+</nav> 
 
 <!-- Content -->
 <div class="container">
