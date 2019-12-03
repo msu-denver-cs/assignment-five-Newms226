@@ -4,7 +4,6 @@
       <img src="assets/icon/favicon-32x32.png" width="30" height="30" class="d-inline-block align-top" alt="">
       CarShop
   </div>
-  
   <button class="navbar-toggler" type="button" aria-controls="navbarContent" 
       [attr.aria-expanded]="!collapsed" aria-label="Toggle navigation" 
       (click)="collapsed = !collapsed">
@@ -25,11 +24,15 @@
       <li class="nav-item" (click)="selected = 'parts'"> 
         <div class="nav-link">Parts</div>
       </li>
+
+      
     </ul>
-  </div>
-  <a style="font-size: 2em; color: white;" href="https://github.com/Newms226/CarShop">
+    <a class="github" href="https://github.com/Newms226/CarShop" 
+          placement="left" ngbTooltip="View this code's source">
       <i class="fab fa-github"></i>
-  </a>
+    </a>
+  </div>
+  
   
 </nav> 
 
