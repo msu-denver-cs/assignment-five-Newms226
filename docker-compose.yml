@@ -1,0 +1,27 @@
+version: '3.5'
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+  ror:
+    build: ./CarShop-API
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    volumes:
+      - ./CarShop-API:/CarShop-API
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+
+  ng: # The name of the service
+      # container_name: angularcontainer  # Container name
+      build: ./CarShop-Spa # Location of our Dockerfile
+      volumes: # Volume binding
+        - './CarShop-Spa:/usr/src/app'
+      ports:
+        - '4200:4200' # Port mapping
+      command: >
+        bash -c "npm install && ng serve --host 0.0.0.0 --port 4200"
+      depends_on:
+        - ror
