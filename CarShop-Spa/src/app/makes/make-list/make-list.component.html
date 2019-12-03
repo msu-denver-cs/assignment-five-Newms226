@@ -1,6 +1,6 @@
 <div>
     <ngx-masonry class="grid" [options]="masonaryOptions">
-        <div ngxMasonryItem class='block col-lg-4 col-md-6' *ngFor="let make of data$ | async">
+        <div ngxMasonryItem class='block col-lg-3 col-md-4' *ngFor="let make of data$ | async">
             <app-make-display class='block-item' [make]="make"></app-make-display>
         </div>
     </ngx-masonry>
