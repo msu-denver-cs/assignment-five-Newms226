@@ -3,9 +3,8 @@ class MakesController < ApplicationController
 
   # GET /makes
   def index
-    @makes = Make.all
-
-    render json: @makes
+    @meta, @makes = Make.api_query search_params
+    render 'makes/index.json'
   end
 
   # GET /makes/1
@@ -47,5 +46,9 @@ class MakesController < ApplicationController
     # Only allow a trusted parameter "white list" through.
     def make_params
       params.require(:make).permit(:name, :country)
+    end
+
+    def search_params
+      params.permit(:name, :country, :order, :page, :desc, :perpage)
     end
 end

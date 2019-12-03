@@ -3,9 +3,8 @@ class PartsController < ApplicationController
 
   # GET /parts
   def index
-    @parts = Part.all
-
-    render json: @parts
+    @meta, @parts = Part.api_query search_params
+    render 'parts/index.json'
   end
 
   # GET /parts/1
@@ -47,5 +46,9 @@ class PartsController < ApplicationController
     # Only allow a trusted parameter "white list" through.
     def part_params
       params.require(:part).permit(:name)
+    end
+
+    def search_params
+      params.permit(:name, :order, :page, :desc, :perpage)
     end
 end
