@@ -1,3 +1,45 @@
+<nav class="navbar navbar-expand-md navbar-light bg-light">
+    <a class="navbar-brand d-sm-bloc d-md-none" href="#">Search</a>
+    <button class="navbar-toggler" type="button" aria-controls="navbarContent" 
+        [attr.aria-expanded]="!collapsed" aria-label="Toggle navigation" 
+        (click)="collapsed = !collapsed">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    
+    <!-- Collapsable Options -->
+    <div class="navbar-collapse" [class.collapse]="collapsed" id="navbarContent">
+        <ul class="navbar-nav ml-auto">
+        <!-- Search -->
+            <div class="input-group">
+                <input id="typeahead-name" 
+                    type="text" 
+                    class="form-control" 
+                    [(ngModel)]="search.name" 
+                    placeholder="name"
+                />
+                <input id="typeahead-basic" 
+                    type="text" 
+                    class="form-control" 
+                    [(ngModel)]="search.country" 
+                    placeholder="country"
+                />
+            </div>
+        
+            <!-- Drop down options -->
+            <li class="nav-item" ngbDropdown display="dynamic" placement="bottom-right">
+                <a class="nav-link" style="cursor: pointer" ngbDropdownToggle id="navbarDropdown3" role="button">
+                    sort by
+                </a>
+                <div ngbDropdownMenu aria-labelledby="navbarDropdown3" class="dropdown-menu">
+                    <a ngbDropdownItem href="#" (click)="changeOrder('name')">name</a>
+                    <a ngbDropdownItem href="#" (click)="changeOrder('country')">country</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+
 <div>
     <ngx-masonry class="grid" [options]="masonaryOptions">
         <div ngxMasonryItem class='block col-lg-3 col-md-4' *ngFor="let make of data$ | async">

@@ -17,12 +17,9 @@ import { MakeListComponent } from './makes/make-list/make-list.component';
 import { MakeDisplayComponent } from './makes/make-display/make-display.component';
 import { PartListComponent } from './parts/part-list/part-list.component';
 import { PartDisplayComponent } from './parts/part-display/part-display.component';
-import { TableRootComponent } from './table/table-root/table-root.component';
-import { TableViewComponent } from './table/table-view/table-view.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FormsModule } from '@angular/forms';
-import { CarSearchBarComponent } from './cars/car-search-bar/car-search-bar.component';
 import { AbstractListComponent } from './api/list/list.component';
 
 @NgModule({
@@ -35,11 +32,8 @@ import { AbstractListComponent } from './api/list/list.component';
     MakeDisplayComponent,
     PartListComponent,
     PartDisplayComponent,
-    TableRootComponent,
-    TableViewComponent,
     NavbarComponent,
-    CarSearchBarComponent,
-    AbstractListComponent
+    AbstractListComponent,
   ],
   imports: [
     BrowserModule,

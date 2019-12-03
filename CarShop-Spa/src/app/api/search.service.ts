@@ -4,6 +4,7 @@ import { debounceTime, delay, switchMap, tap } from 'rxjs/operators';
 import { APIResponse, APIMeta } from './query/query-response.model';
 import { QueryParams } from './query/query.model';
 import { ApiService } from './api-service.service';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -26,15 +27,28 @@ export abstract class SearchService<T, PARAM> {
   };
 
   constructor(public table: string, private api: ApiService) {
-    this._search$.pipe(tap(() => this._loading$.next(true)), debounceTime(200), switchMap(() => this._search()), delay(200), tap(() => this._loading$.next(false))).subscribe((result: APIResponse<T>) => {
+    this._search$.pipe(
+      tap(() => this._loading$.next(true)), 
+      debounceTime(200), 
+      switchMap(() => this._search()), 
+      delay(200), 
+      tap(() => this._loading$.next(false))
+    ).subscribe((result: APIResponse<T>) => {
       console.log('INIT LOAD');
       this._parse(result);
       this._pastFirstLoad = true;
     });
-    this._paginator$.pipe(tap(() => this._loading$.next(true)), switchMap(() => this._search()), tap(() => this._loading$.next(false))).subscribe((result: APIResponse<T>) => {
+
+    this._paginator$.pipe(
+      tap(() => this._loading$.next(true)), 
+      tap(() => this.page++),
+      switchMap(() => this._search()), 
+      tap(() => this._loading$.next(false))
+    ).subscribe((result: APIResponse<T>) => {
       console.log('NEW LOAD');
       this._append(result);
     });
+
     this._search$.next();
   }
 
@@ -52,7 +66,7 @@ export abstract class SearchService<T, PARAM> {
 
   loadMore(): void {
     // TODO: page out of bounds
-    this.page++;
+    
     this._paginator$.next();
   }
 
@@ -66,7 +80,7 @@ export abstract class SearchService<T, PARAM> {
     }
   }
 
-  _set(patch: Partial<PARAM>): void {
+  protected _set(patch: Partial<PARAM>): void {
     Object.assign(this._state, patch);
     this.page = 1;
     console.log('NEW STATE: ');
