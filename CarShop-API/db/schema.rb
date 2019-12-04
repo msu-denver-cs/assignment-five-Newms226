@@ -10,11 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_25_213630) do
+ActiveRecord::Schema.define(version: 2019_12_03_235515) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "cars", force: :cascade do |t|
     t.string "model"
-    t.integer "make_id"
+    t.bigint "make_id"
     t.integer "vin"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -22,8 +25,10 @@ ActiveRecord::Schema.define(version: 2019_11_25_213630) do
   end
 
   create_table "cars_parts", id: false, force: :cascade do |t|
-    t.integer "car_id", null: false
-    t.integer "part_id", null: false
+    t.bigint "car_id", null: false
+    t.bigint "part_id", null: false
+    t.index ["car_id", "part_id"], name: "index_cars_parts_on_car_id_and_part_id"
+    t.index ["part_id", "car_id"], name: "index_cars_parts_on_part_id_and_car_id"
   end
 
   create_table "makes", force: :cascade do |t|
@@ -39,4 +44,5 @@ ActiveRecord::Schema.define(version: 2019_11_25_213630) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "cars", "makes"
 end
