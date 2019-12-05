@@ -47,8 +47,8 @@ export class AbstractListComponent<T, PARAM> implements OnInit, AfterViewInit {
   }
 
   changeOrder(order: string) {
-    this.search.order = order
-    this.search.page = 1
+    this.search.reset();
+    this.search.order = order;
   }
 
   ngAfterViewInit() {

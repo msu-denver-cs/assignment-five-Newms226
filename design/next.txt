@@ -3,7 +3,6 @@ Current Sprint
 Next Sprints
 
 ## curent tasks
-- Extrapolate and make generic. Use for parts and makes.
 - pop up edit modal
 - authentication
 - dockerize
