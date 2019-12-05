@@ -52,3 +52,6 @@ gem 'pry', '~> 0.12.2'
 
 # use postgres
 gem 'pg', '~> 0.18.4'
+
+# Authn
+gem 'devise_token_auth'
