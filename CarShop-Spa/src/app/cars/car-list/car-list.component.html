@@ -11,33 +11,37 @@
     <!-- Collapsable Options -->
     <div class="navbar-collapse" [class.collapse]="collapsed" id="navbarContent">
         <ul class="navbar-nav ml-auto">
-            <button (click)="reset()">reset</button>
+            
         <!-- Search -->
-            <div class="input-group">
+            <div class="input-group ">
+                <!-- <div class="input-group-prepend"> -->
+                    <!-- <button type="button" (click)="reset()" class="btn btn-primary">reset</button> -->
+                <!-- </div> -->
+                
                 <input id="typeahead-basic" 
                     type="text" 
-                    class="form-control" 
+                    class="form-control search-bar"
                     [(ngModel)]="search.make" 
                     [ngbTypeahead]="typeahead.makes"
                     placeholder="make"
                 />
                 <input id="typeahead-basic" 
                     type="text" 
-                    class="form-control" 
+                    class="form-control search-bar" 
                     [(ngModel)]="search.model" 
                     [ngbTypeahead]="typeahead.models"
                     placeholder="model"
                 />
                 <input id="typeahead-basic" 
                     type="text" 
-                    class="form-control" 
+                    class="form-control search-bar"
                     [(ngModel)]="search.vin" 
                     [ngbTypeahead]="typeahead.vins"
                     placeholder="vin"
                 />
                 <input id="typeahead-basic" 
                     type="text" 
-                    class="form-control" 
+                    class="form-control search-bar"
                     [(ngModel)]="search.part" 
                     [ngbTypeahead]="typeahead.parts"
                     placeholder="part"
@@ -47,9 +51,8 @@
                 </div> -->
             </div>
 
+            <button type="button" (click)="reset()" class="btn btn-primary">reset</button>
             
-            
-        
             <!-- Drop down options -->
             <li class="nav-item" ngbDropdown display="dynamic" placement="bottom-right">
                 
