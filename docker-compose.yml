@@ -1,4 +1,4 @@
-version: '3.5'
+version: '3.7'
 services:
   db:
     image: postgres
@@ -14,14 +14,15 @@ services:
     depends_on:
       - db
 
-  ng: # The name of the service
-      # container_name: angularcontainer  # Container name
+  ng: 
       build: ./CarShop-Spa # Location of our Dockerfile
       volumes: # Volume binding
-        - './CarShop-Spa:/usr/src/app'
+        - './CarShop-Spa:/app'
+        - '/app/node_modules'
       ports:
         - '4200:4200' # Port mapping
-      command: >
-        bash -c "npm install && ng serve --host 0.0.0.0 --port 4200"
+        # - '49153:49153'
+      # command: >
+      #   bash -c "ng serve --host 0.0.0.0 --port 4200"
       depends_on:
         - ror
