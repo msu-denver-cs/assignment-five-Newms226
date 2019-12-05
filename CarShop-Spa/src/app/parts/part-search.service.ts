@@ -8,17 +8,17 @@ export interface PartParams extends QueryParams {
   name: string;
 }
 
+export const DEFAULT_PART_PARMS: PartParams = {
+  name: ''
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class PartSearchService extends SearchService<Part, PartParams> {
   
-  _state: PartParams = {
-    name: ''
-  }
-
   constructor(api: ApiService) {
-    super('parts', api)
+    super('parts', api, DEFAULT_PART_PARMS);
    }
 
    get name() { return this._state.name; }

@@ -11,6 +11,7 @@
     <!-- Collapsable Options -->
     <div class="navbar-collapse" [class.collapse]="collapsed" id="navbarContent">
         <ul class="navbar-nav ml-auto">
+            <button (click)="reset()">reset</button>
         <!-- Search -->
             <div class="input-group">
                 <input id="typeahead-basic" 
@@ -45,9 +46,13 @@
                     <button class="btn btn-success" (click)="update()">Search</button>
                 </div> -->
             </div>
+
+            
+            
         
             <!-- Drop down options -->
             <li class="nav-item" ngbDropdown display="dynamic" placement="bottom-right">
+                
                 <a class="nav-link" style="cursor: pointer" ngbDropdownToggle id="navbarDropdown3" role="button">
                     sort by
                 </a>
@@ -57,6 +62,7 @@
                     <a ngbDropdownItem href="#" (click)="changeOrder('vin')">vin</a>
                 </div>
             </li>
+
         </ul>
     </div>
 </nav>

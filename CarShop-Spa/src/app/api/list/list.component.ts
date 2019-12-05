@@ -55,5 +55,7 @@ export class AbstractListComponent<T, PARAM> implements OnInit, AfterViewInit {
     this._scrollObserver.observe(this.anchor.nativeElement);
   }
 
+  reset() { this.search.reset(); }
+
 
 }

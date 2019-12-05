@@ -6,6 +6,13 @@ import { QueryParams } from '../api/query/query.model'
 import { SearchService } from '../api/search.service';
 import { ApiService } from '../api/api-service.service';
 
+export const DEFAULT_CAR_PARAMS: CarSearchState = {
+  part: '',
+  make: '',
+  model: '',
+  vin: ''
+};
+
 
 export interface CarSearchState extends QueryParams {
   part: string;
@@ -19,15 +26,10 @@ export interface CarSearchState extends QueryParams {
 })
 export class CarSearchService extends SearchService<Car, CarSearchState> {
 
-  _state: CarSearchState = {
-    part: '',
-    make: '',
-    model: '',
-    vin: ''
-  };
+  // _state: CarSearchState = {...DEFAULT_CAR_PARAMS};
 
   constructor(api: ApiService) {
-    super('cars', api);
+    super('cars', api, DEFAULT_CAR_PARAMS);
   }
   
   get make() { return this._state.make; }
@@ -39,4 +41,5 @@ export class CarSearchService extends SearchService<Car, CarSearchState> {
   set model(model: string) { this._set({model}); }
   set vin(vin: string) { this._set({vin});}
   set part(part: string) { this._set({part}); }
+
 }

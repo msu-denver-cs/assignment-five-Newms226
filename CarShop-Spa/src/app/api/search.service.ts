@@ -4,12 +4,20 @@ import { debounceTime, delay, switchMap, tap } from 'rxjs/operators';
 import { APIResponse, APIMeta } from './query/query-response.model';
 import { QueryParams } from './query/query.model';
 import { ApiService } from './api-service.service';
+import { Query } from '@angular/compiler/src/core';
+
+const DEFAULT_SUPER = {
+  page: 1,
+  perpage: 24,
+  order: '',
+};
 
 @Injectable({
   providedIn: 'root'
 })
-export abstract class SearchService<T, PARAM> {
-  abstract _state: QueryParams;
+export class SearchService<T, PARAM> {
+  // abstract _state: QueryParams;
+  _state: PARAM;
 
   private _loading$ = new BehaviorSubject<boolean>(true);
   private _search$ = new Subject<void>();
@@ -20,13 +28,11 @@ export abstract class SearchService<T, PARAM> {
   });
 
   private _pastFirstLoad: boolean = false;
-  private _superState = {
-    page: 1,
-    perpage: 24,
-    order: '',
-  };
+  private _superState = {...DEFAULT_SUPER};
 
-  constructor(public table: string, private api: ApiService) {
+  constructor(public table: string, private api: ApiService, private defaultParams: PARAM) {
+    this._state = {...defaultParams};
+
     this._search$.pipe(
       tap(() => this._loading$.next(true)), 
       debounceTime(200), 
@@ -78,6 +84,12 @@ export abstract class SearchService<T, PARAM> {
     else {
       return false;
     }
+  }
+
+  reset(): void {
+    this._superState = {...DEFAULT_SUPER};
+    this._state = {...this.defaultParams}
+    this._search$.next();
   }
 
   protected _set(patch: Partial<PARAM>): void {

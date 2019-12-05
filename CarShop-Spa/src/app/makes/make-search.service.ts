@@ -9,18 +9,18 @@ export interface MakeParams extends QueryParams {
   country: string;
 }
 
+export const DEAFULT_MAKE_PARAMS = {
+  name: '',
+  country: ''
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class MakeSearchService extends SearchService<Make, MakeParams> {
 
-  _state: MakeParams = {
-    name: '',
-    country: ''
-  }
-
   constructor(api: ApiService) {
-    super('makes', api)
+    super('makes', api, DEAFULT_MAKE_PARAMS)
   }
 
   get name() { return this._state.name; }
