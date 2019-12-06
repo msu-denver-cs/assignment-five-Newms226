@@ -55,7 +55,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   providers: [ AngularTokenModule ],
   bootstrap: [AppComponent],
   entryComponents: [
-    LoginComponent
+    LoginComponent,
+    RegisterComponent
   ]
 })
 export class AppModule { }
