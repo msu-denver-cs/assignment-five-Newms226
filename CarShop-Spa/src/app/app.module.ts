@@ -5,8 +5,7 @@ import { NgModule } from '@angular/core';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 // import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { NgxMasonryModule } from 'ngx-masonry';
-
-
+import { AngularTokenModule } from 'angular-token';
 
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -21,6 +20,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FormsModule } from '@angular/forms';
 import { AbstractListComponent } from './api/list/list.component';
+import { RegisterComponent } from './authn/register/register.component';
+import { LoginComponent } from './authn/login/login.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,8 @@ import { AbstractListComponent } from './api/list/list.component';
     PartDisplayComponent,
     NavbarComponent,
     AbstractListComponent,
+    RegisterComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,9 +45,12 @@ import { AbstractListComponent } from './api/list/list.component';
     FormsModule,
     // MDBBootstrapModule.forRoot(),
     NgbModule,
-    NgxMasonryModule
+    NgxMasonryModule,
+    AngularTokenModule.forRoot({
+      apiBase: 'http://localhost:3000/api'
+    })
   ],
-  providers: [],
+  providers: [ AngularTokenModule ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
