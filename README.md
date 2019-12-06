@@ -9,7 +9,15 @@ Built with docker-compose as 2 custom images with the library Postgres image.
 
 See docker-compose.yml for docker configuration
 
-## Run
+## Cool features
+- Responsive web design powered by [Bootstrap 4](https://getbootstrap.com/docs/4.4/getting-started/introduction/)
+- Observable based search service with [RxJS](https://rxjs-dev.firebaseapp.com/) that dynamically renders items as user enters input.
+  - Intersection Observer based infinite scroll
+- Paginated api calls based on [kaminari](https://github.com/kaminari/kaminari)
+- Masonry layout with [ngx-masonary](https://www.npmjs.com/package/ngx-masonry)
+- Typeahead and modal services in pure Angular with [Angular Powered Bootstrap](https://ng-bootstrap.github.io/#/home)
+
+# Run
 1. Install docker
 2. Clone this repository
 3. `docker-compose up --build`
@@ -18,15 +26,10 @@ See docker-compose.yml for docker configuration
 
 ## Optionally
 5. `docker-compose run ror rake db:create`
-6. `docker-compose run 
+6. `docker-compose run ror rake db:migrate`
+7. `docker-compose run ror rake db:seed`
 
-## Cool features
-- Responsive web design powered by [Bootstrap 4](https://getbootstrap.com/docs/4.4/getting-started/introduction/)
-- Observable based search service with [RxJS](https://rxjs-dev.firebaseapp.com/) that dynamically renders items as user enters input.
-  - Intersection Observer based infinite scroll
-- Paginated api calls based on [kaminari](https://github.com/kaminari/kaminari)
-- Masonry layout with [ngx-masonary](https://www.npmjs.com/package/ngx-masonry)
-- Typeahead and modal services in pure Angular with [Angular Powered Bootstrap](https://ng-bootstrap.github.io/#/home)
+
   
 ## In the works
 - Login authentication with devise-token (see branch authn)
