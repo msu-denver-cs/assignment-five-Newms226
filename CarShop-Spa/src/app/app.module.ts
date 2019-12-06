@@ -22,6 +22,7 @@ import { FormsModule } from '@angular/forms';
 import { AbstractListComponent } from './api/list/list.component';
 import { RegisterComponent } from './authn/register/register.component';
 import { LoginComponent } from './authn/login/login.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -48,9 +49,13 @@ import { LoginComponent } from './authn/login/login.component';
     NgxMasonryModule,
     AngularTokenModule.forRoot({
       apiBase: 'http://localhost:3000/api'
-    })
+    }),
+    ReactiveFormsModule
   ],
   providers: [ AngularTokenModule ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    LoginComponent
+  ]
 })
 export class AppModule { }

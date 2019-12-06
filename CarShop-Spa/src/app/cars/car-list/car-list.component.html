@@ -18,28 +18,28 @@
                     <!-- <button type="button" (click)="reset()" class="btn btn-primary">reset</button> -->
                 <!-- </div> -->
                 
-                <input id="typeahead-basic" 
+                <input id="typeahead-make" 
                     type="text" 
                     class="form-control search-bar"
                     [(ngModel)]="search.make" 
                     [ngbTypeahead]="typeahead.makes"
                     placeholder="make"
                 />
-                <input id="typeahead-basic" 
+                <input id="typeahead-model" 
                     type="text" 
                     class="form-control search-bar" 
                     [(ngModel)]="search.model" 
                     [ngbTypeahead]="typeahead.models"
                     placeholder="model"
                 />
-                <input id="typeahead-basic" 
+                <input id="typeahead-vin" 
                     type="text" 
                     class="form-control search-bar"
                     [(ngModel)]="search.vin" 
                     [ngbTypeahead]="typeahead.vins"
                     placeholder="vin"
                 />
-                <input id="typeahead-basic" 
+                <input id="typeahead-part" 
                     type="text" 
                     class="form-control search-bar"
                     [(ngModel)]="search.part" 

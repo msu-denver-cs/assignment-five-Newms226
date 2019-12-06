@@ -1,4 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { LoginComponent } from '../authn/login/login.component';
+import { AuthnService } from '../authn/authn.service';
 
 @Component({
   selector: 'app-navbar',
@@ -23,7 +26,7 @@ export class NavbarComponent implements OnInit {
     }
   }
 
-  constructor() {
+  constructor(private authn: AuthnService, private modalService: NgbModal) {
     this.selected = new EventEmitter<string>();
   }
 
@@ -37,5 +40,21 @@ export class NavbarComponent implements OnInit {
     this.cssClasses[page].active = true;
     this.selected.emit(page);
   }
+
+  openLogin() {
+    const modalRef = this.modalService.open(LoginComponent);
+  }
+
+  openSignUp() {
+
+  }
+
+  signOut() {
+    this.authn.signOut().subscribe(
+      suc => console.log('Successfully signed out :)'),
+      err => { console.log('Failed to sign out :/ :'); console.log(err)}
+    )
+  }
+
 
 }
