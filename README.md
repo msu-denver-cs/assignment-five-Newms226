@@ -16,6 +16,7 @@ See docker-compose.yml for docker configuration
 - Paginated api calls based on [kaminari](https://github.com/kaminari/kaminari)
 - Masonry layout with [ngx-masonary](https://www.npmjs.com/package/ngx-masonry)
 - Typeahead and modal services in pure Angular with [Angular Powered Bootstrap](https://ng-bootstrap.github.io/#/home)
+- [devise-token](https://github.com/lynndylanhurley/devise_token_auth)/[angular-token](https://github.com/neroniaky/angular-token) for token-based authentication 
 
 # Run
 1. Install docker
@@ -32,7 +33,6 @@ See docker-compose.yml for docker configuration
 
   
 ## In the works
-- Login authentication with devise-token (see branch authn)
 - RESTful json api based on ruby on rails
   - Currently focuses on read operations only, create, update, destroy operations in the works.
   - api is currently (mostly) setup for a restful json api, front-end dev upcoming

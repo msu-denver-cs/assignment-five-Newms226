@@ -5,7 +5,6 @@ Next Sprints
 ## curent tasks
 - pop up edit modal
 - authentication
-- dockerize
 - front-end tests
 
 
