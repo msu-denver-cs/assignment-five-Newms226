@@ -6,9 +6,10 @@
     </button>
 </div>
 <div class="modal-body">
-    <div *ngIf="!valid" class="alert alert-danger" role="alert">
-        Invalid login. Try again
+    <div *ngIf="isInvalid" class="alert alert-danger" role="alert">
+        {{ getErrorMessage() }}
     </div>
+
     <p>Please log in:</p>
     <form [formGroup]="loginForm" (ngSubmit)="submitLogin()">
         <div class="form-group">
