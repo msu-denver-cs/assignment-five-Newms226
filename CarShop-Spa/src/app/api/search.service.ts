@@ -8,7 +8,7 @@ import { Query } from '@angular/compiler/src/core';
 
 const DEFAULT_SUPER = {
   page: 1,
-  perpage: 24,
+  perpage: 12,
   order: '',
 };
 
