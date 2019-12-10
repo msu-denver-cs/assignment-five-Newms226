@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularTokenService } from 'angular-token';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthnService } from '../authn.service';
 
 @Component({
@@ -11,8 +11,13 @@ import { AuthnService } from '../authn.service';
 })
 export class LoginComponent implements OnInit {
   loginForm = new FormGroup({
-    login: new FormControl(''),
-    password: new FormControl('')
+    login: new FormControl('', [
+      Validators.email,
+      Validators.required
+    ]),
+    password: new FormControl('', [
+      Validators.required
+    ])
   });
 
   valid: boolean = true;
@@ -24,8 +29,10 @@ export class LoginComponent implements OnInit {
   }
 
   submitLogin() {
+    this.valid = true;
+
     this.authn.signIn(this.loginForm.value).subscribe(
-      res => {
+      _ => {
         console.log('Signed in! :)'); 
         this.activeModal.dismiss('Cross click');
       },
