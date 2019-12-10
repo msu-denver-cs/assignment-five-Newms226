@@ -1,6 +1,7 @@
 <div class="modal-header">
     <h4 class="modal-title">Welcome back!</h4>
-    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <button type="button" class="close" aria-label="Close" 
+        (click)="activeModal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
@@ -10,13 +11,21 @@
     </div>
     <p>Please log in:</p>
     <form [formGroup]="loginForm" (ngSubmit)="submitLogin()">
-        <label for="login">
-            <input id="login" type="text" formControlName="login" placeholder="username" autocomplete="username">
-        </label>
+        <div class="form-group">
+            <label for="login"><strong>Login:</strong></label>
+            <input id="login" type="text" formControlName="login" 
+                    placeholder="username" autocomplete="username"
+                    class="form-control">
+        </div>
 
-        <label for="password" type="password">
-            <input id="password" type="password" formControlName="password" placeholder="password" autocomplete="current-password">
-        </label>
+        <div class="form-group">
+            <label for="password" type="password">
+                <strong>Password:</strong>
+            </label>
+            <input id="password" type="password" formControlName="password" 
+                placeholder="password" autocomplete="current-password"
+                class="form-control">
+        </div>
 
         <button type="submit" class="btn btn-outline-dark">
             Sign In
