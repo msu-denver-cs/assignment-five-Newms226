@@ -22,6 +22,7 @@ export class RegisterComponent implements OnInit {
   });
 
   private attemptSubmission: boolean = false;
+  private errors: string[];
 
   private get login() { return this.registerForm.get('login'); }
   private get password() { return this.registerForm.get('password'); }
@@ -30,23 +31,47 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() { }
 
-  getErrorMessage() {
+  buildErrorMessages() {
+    this.errors = [];
+
     if (this.login.errors) {
       if (this.login.errors.required) {
-        return 'Must supply an email';
-      } else if (this.login.errors.email) {
-        return 'Must supply a valid email';
+        this.errors.push('Must supply an email');
       }
-    } else if (this.password.errors) {
+      if (this.login.errors.email) {
+        this.errors.push('Must supply a valid email');
+      }
+    }
+    
+    if (this.password.errors) {
       if (this.password.errors.required) {
-        return 'Must supply a password';
-      } else if (this.password.errors.minLength) {
+        this.errors.push('Must supply a password');
+      }
+      if (this.password.errors.minLength) {
         return 'Password must be at least 6 characters';
       }
     } else if (!arePasswordsEqual(this.registerForm)) {
       return 'Passwords do not match';
     }
   }
+
+  // getErrorMessage() {
+  //   if (this.login.errors) {
+  //     if (this.login.errors.required) {
+  //       return 'Must supply an email';
+  //     } else if (this.login.errors.email) {
+  //       return 'Must supply a valid email';
+  //     }
+  //   } else if (this.password.errors) {
+  //     if (this.password.errors.required) {
+  //       return 'Must supply a password';
+  //     } else if (this.password.errors.minLength) {
+  //       return 'Password must be at least 6 characters';
+  //     }
+  //   } else if (!arePasswordsEqual(this.registerForm)) {
+  //     return 'Passwords do not match';
+  //   }
+  // }
 
   isInvalid() {
     return this.attemptSubmission && 
@@ -58,7 +83,10 @@ export class RegisterComponent implements OnInit {
 
     this.authn.register(this.registerForm.value).subscribe(
       res => console.log('Signed Up!'),
-      err => console.log('Failed to sign up :/')
+      err => {
+        console.log('Failed to sign up')
+        console.log(err.error.errors.email)
+      }
     )
   }
 
