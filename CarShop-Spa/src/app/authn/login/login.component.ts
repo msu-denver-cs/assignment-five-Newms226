@@ -42,14 +42,14 @@ export class LoginComponent implements OnInit {
 
     if (this.login.errors) {
       if (this.login.errors.required) {
-        return 'Must supply email.'
+        return 'Must supply email.';
       } else if (this.login.errors.email) {
-        return 'Login must be a valid email.'
+        return 'Login must be a valid email.';
       }
     } else if (this.password.errors && this.password.errors.required) {
-      return 'Must provide a password.'
+      return 'Must provide a password.';
     } else if (this.invalidCredentials) {
-      return 'Invalid email/password.'
+      return 'Invalid email/password.';
     }
   }
 
