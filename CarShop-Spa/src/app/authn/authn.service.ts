@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularTokenService } from 'angular-token';
 import { Observable } from 'rxjs';
+import { FormGroup } from '@angular/forms';
 
 export interface UserSignIn {
   login: string;
@@ -11,6 +12,13 @@ export interface NewUser {
   login: string;
   password: string;
   passwordConfirmation: string;
+}
+
+export function arePasswordsEqual(group: FormGroup): boolean {
+  let pass = group.get('password').value;
+  let passConfirm = group.get('passwordConfirmation').value;
+
+  return pass === passConfirm;
 }
 
 @Injectable({

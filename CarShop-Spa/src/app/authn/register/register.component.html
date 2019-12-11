@@ -5,15 +5,8 @@
     </button>
 </div>
 <div class="modal-body">
-    
-    <p>Please log in:</p>
-    <div *ngIf="registerForm.invalid && (registerForm.dirty || registerForm.touched)"
-        class="alert alert-danger">
-
-        <!-- <div *ngIf="login.errors.required">
-            Password is required.
-        </div> -->
-         
+    <div *ngIf="isInvalid()" class="alert alert-danger">
+        {{ getErrorMessage() }}
     </div>
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
         <label for="login">
