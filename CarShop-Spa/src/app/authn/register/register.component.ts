@@ -1,8 +1,9 @@
-import { Component, OnInit, Injector } from '@angular/core';
+import { Component, OnInit, Injector, forwardRef } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthnService, arePasswordsEqual } from '../authn.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import { LoginComponent } from '../login/login.component';
+import { PasswordValidation } from './password-validation';
 
 @Component({
   selector: 'app-register',
@@ -20,6 +21,8 @@ export class RegisterComponent implements OnInit {
       updateOn: 'blur'
     }),
     'passwordConfirmation': new FormControl('', [Validators.required])
+  }, {
+    validators: [PasswordValidation.MatchPassword]
   });
 
   constructor(public activeModal: NgbActiveModal, 
