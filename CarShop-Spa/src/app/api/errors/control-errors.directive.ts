@@ -1,10 +1,11 @@
 // https://netbasal.com/make-your-angular-forms-error-messages-magically-appear-1e32350b7fa5
-import { Directive, Self, InjectionToken, Inject, Optional, Host, ViewContainerRef, ComponentRef, ComponentFactoryResolver, OnDestroy } from '@angular/core';
+import { Directive, Self, InjectionToken, Inject, Optional, Host, ViewContainerRef, ComponentRef, ComponentFactoryResolver, OnDestroy, ElementRef } from '@angular/core';
 import { NgControl } from '@angular/forms';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { FormSubmitDirective } from './form-submit.directive';
-import { Observable, EMPTY, merge } from 'rxjs';
+import { Observable, EMPTY, merge, fromEvent } from 'rxjs';
 import { ControlErrorComponent } from './control-error.component';
+import { debounceTime } from 'rxjs/operators';
 
 export const defaultErrors = {
   required: (error) => `This field is required`,
@@ -26,7 +27,8 @@ export class ControlErrorsDirective implements OnDestroy {
   submit$: Observable<Event>;
   viewRef: ComponentRef<ControlErrorComponent>;
 
-  constructor(@Self() private control: NgControl,
+  constructor(private hostElement: ElementRef<HTMLElement>,
+              @Self() private control: NgControl,
               @Optional() @Host() private form: FormSubmitDirective,
               @Inject(FORM_ERRORS) private errors,
               private vcr: ViewContainerRef,
@@ -38,7 +40,10 @@ export class ControlErrorsDirective implements OnDestroy {
   ngOnInit() {
     merge( // change to concat?
       this.submit$,
-      this.control.valueChanges
+      // this.control.valueChanges.pipe(
+      //   debounceTime(1000) // wait one second
+      // )
+      fromEvent(this.hostElement.nativeElement, 'blur')
     ).pipe(
       untilDestroyed(this)
       // wait for blur => unblur...wait an amount of time between 
@@ -67,8 +72,10 @@ export class ControlErrorsDirective implements OnDestroy {
   }
 
   destroyError() {
-    this.viewRef.destroy();
-    this.viewRef = null;
+    if (this.viewRef) {
+      this.viewRef.destroy();
+      this.viewRef = null;
+    }
     // this.vcr.detach();
   }
 
