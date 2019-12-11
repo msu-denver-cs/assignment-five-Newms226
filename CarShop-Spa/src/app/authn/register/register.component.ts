@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit, Injector } from '@angular/core';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthnService, arePasswordsEqual } from '../authn.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { LoginComponent } from '../login/login.component';
 
 @Component({
   selector: 'app-register',
@@ -18,74 +19,33 @@ export class RegisterComponent implements OnInit {
       validators: [Validators.minLength(6), Validators.required],
       updateOn: 'blur'
     }),
-    'passwordConfirmation': new FormControl('')
+    'passwordConfirmation': new FormControl('', [Validators.required])
   });
 
-  private attemptSubmission: boolean = false;
-  private errors: string[];
-
-  private get login() { return this.registerForm.get('login'); }
-  private get password() { return this.registerForm.get('password'); }
-
-  constructor(public activeModal: NgbActiveModal, private authn: AuthnService) { }
+  constructor(public activeModal: NgbActiveModal, 
+              private authn: AuthnService,
+              private modalService: NgbModal) { }
 
   ngOnInit() { }
 
-  buildErrorMessages() {
-    this.errors = [];
-
-    if (this.login.errors) {
-      if (this.login.errors.required) {
-        this.errors.push('Must supply an email');
-      }
-      if (this.login.errors.email) {
-        this.errors.push('Must supply a valid email');
-      }
-    }
-    
-    if (this.password.errors) {
-      if (this.password.errors.required) {
-        this.errors.push('Must supply a password');
-      }
-      if (this.password.errors.minLength) {
-        return 'Password must be at least 6 characters';
-      }
-    } else if (!arePasswordsEqual(this.registerForm)) {
-      return 'Passwords do not match';
-    }
-  }
-
-  // getErrorMessage() {
-  //   if (this.login.errors) {
-  //     if (this.login.errors.required) {
-  //       return 'Must supply an email';
-  //     } else if (this.login.errors.email) {
-  //       return 'Must supply a valid email';
-  //     }
-  //   } else if (this.password.errors) {
-  //     if (this.password.errors.required) {
-  //       return 'Must supply a password';
-  //     } else if (this.password.errors.minLength) {
-  //       return 'Password must be at least 6 characters';
-  //     }
-  //   } else if (!arePasswordsEqual(this.registerForm)) {
-  //     return 'Passwords do not match';
-  //   }
-  // }
-
-  isInvalid() {
-    return this.attemptSubmission && 
-      ( this.login.errors || this.password.errors || !arePasswordsEqual(this.registerForm) );
-  }
-
   onSubmit() {
-    this.attemptSubmission = true;
-
     this.authn.register(this.registerForm.value).subscribe(
-      res => console.log('Signed Up!'),
-      err => {
-        console.log('Failed to sign up')
-        console.log(err.error.errors.email)
+      res => {
+        console.log('Signed Up!');
+        this.activeModal.dismiss();
+      },
+      errRes => {
+        console.log('Failed to sign up');
+        console.log(errRes);
+        if (errRes.error.errors.email[0] === "has already been taken") {
+          console.log('Email has already been taken :/')
+          this.activeModal.dismiss();
+
+          const email: string = this.registerForm.get('login').value
+          const loginModal = this.modalService.open(LoginComponent);
+          loginModal.componentInstance.errorMessage = 
+            `'${email}' has an account registered already. Please log in.`;
+        }
       }
     )
   }

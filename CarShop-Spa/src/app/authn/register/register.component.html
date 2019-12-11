@@ -6,9 +6,9 @@
     </button>
 </div>
 <div class="modal-body">
-    <div *ngIf="isInvalid()" class="alert alert-danger">
+    <!-- <div *ngIf="isInvalid()" class="alert alert-danger">
         {{ getErrorMessage() }}
-    </div>
+    </div> -->
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
             <label for="login" hidden></label>

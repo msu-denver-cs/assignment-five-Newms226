@@ -11,10 +11,10 @@ import { AuthnService } from '../authn.service';
 })
 export class LoginComponent implements OnInit {
   @Input() errorMessage: string;
-  @Input() email: string;
+  // @Input() email: string; // TODO: allow import of email when created from register
 
   loginForm = new FormGroup({
-    'login': new FormControl(this.email || '', [
+    'login': new FormControl('', [
       Validators.email,
       Validators.required
     ]),
