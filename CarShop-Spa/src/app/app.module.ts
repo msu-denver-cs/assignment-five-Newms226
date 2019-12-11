@@ -23,6 +23,9 @@ import { AbstractListComponent } from './api/list/list.component';
 import { RegisterComponent } from './authn/register/register.component';
 import { LoginComponent } from './authn/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ControlErrorsDirective } from './api/errors/control-errors.directive';
+import { FormSubmitDirective } from './api/errors/form-submit.directive';
+import { ControlErrorComponent } from './api/errors/control-error.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +41,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     AbstractListComponent,
     RegisterComponent,
     LoginComponent,
+    ControlErrorsDirective,
+    FormSubmitDirective,
+    ControlErrorComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,7 +62,8 @@ import { ReactiveFormsModule } from '@angular/forms';
   bootstrap: [AppComponent],
   entryComponents: [
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ControlErrorComponent
   ]
 })
 export class AppModule { }

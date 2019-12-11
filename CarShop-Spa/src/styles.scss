@@ -16,3 +16,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   * {
     box-sizing: border-box;
   }
+
+form.submitted input.ng-invalid, input.ng-dirty.ng-invalid {
+  border: 1px solid red;
+}
