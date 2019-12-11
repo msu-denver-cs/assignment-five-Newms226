@@ -11,16 +11,17 @@ RUN apt-get update && apt-get install -yq google-chrome-stable
 WORKDIR /app
 
 # add `/app/node_modules/.bin` to $PATH
-ENV PATH /app/node_modules/.bin:$PATH
+ENV PATH node_modules/.bin:$PATH
 
 # install and cache app dependencies
-COPY package.json package.json
-RUN npm install
+COPY package.json .
+
 RUN npm install -g @angular/cli
+RUN npm install
 # problem with token authn, might require another npm install :/
 
 # add app
-COPY . /app
+COPY . .
 
 # start app
 CMD ng serve --host 0.0.0.0
