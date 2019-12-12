@@ -8,6 +8,8 @@ Next Sprints
 - pop up create modal
 - pop up edit(update) modal
 - front-end tests
+- password reset
+- account management
 
 
 
