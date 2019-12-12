@@ -1,0 +1,33 @@
+<div class="modal-header">
+    <h4 class="modal-title">Welcome back!</h4>
+    <button type="button" class="close" aria-label="Close" 
+        (click)="activeModal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+        {{ errorMessage }}
+    </div>
+
+    <p>Please log in:</p>
+    <form [formGroup]="loginForm" (ngSubmit)="submitLogin()">
+        <div class="form-group">
+            <label for="login" hidden></label>
+            <input id="login" type="text" formControlName="login" 
+                    placeholder="email" autocomplete="email"
+                    class="form-control">
+        </div>
+
+        <div class="form-group">
+            <label for="password" type="password" hidden></label>
+            <input id="password" type="password" formControlName="password" 
+                placeholder="password" autocomplete="current-password"
+                class="form-control">
+        </div>
+
+        <button type="submit" class="btn btn-success" [disabled]="loginForm.invalid">
+            Sign In
+        </button>
+    </form>
+</div>

@@ -12,21 +12,31 @@
     <!-- Collapsable Options -->
     <div class="navbar-collapse" [class.collapse]="collapsed" id="navbarContent">
         <ul class="navbar-nav mr-auto">
-        <li [ngClass]="cssClasses.cars" (click)="changeSelected('cars')">
-            <div class="nav-link">Cars</div>
-        </li>
-        <li [ngClass]="cssClasses.makes" (click)="changeSelected('makes')">
-            <div class="nav-link">Makes</div>
-        </li>
-        
-        <li [ngClass]="cssClasses.parts" (click)="changeSelected('parts')"> 
-            <div class="nav-link">Parts</div>
-        </li>
-        
+            <li [ngClass]="cssClasses.cars" (click)="changeSelected('cars')">
+                <div class="nav-link">Cars</div>
+            </li>
+            <li [ngClass]="cssClasses.makes" (click)="changeSelected('makes')">
+                <div class="nav-link">Makes</div>
+            </li>
+            
+            <li [ngClass]="cssClasses.parts" (click)="changeSelected('parts')"> 
+                <div class="nav-link">Parts</div>
+            </li>
         </ul>
+        
+        <div *ngIf="! authn.userSignedIn() else logOut">
+            <!-- <ul class="navbar-nav mr-auto"> -->
+                <button type="button" class="btn btn-success" (click)="openLogin()">Login</button>
+                <button type="button" class="btn btn-success" (click)="openSignUp()">Sign Up</button>
+            <!-- </ul>     -->
+        </div>
         <a class="github" href="https://github.com/Newms226/CarShop" 
             placement="left" ngbTooltip="View this code's source">
-        <i class="fab fa-github"></i>
+            <i class="fab fa-github"></i>
         </a>
     </div>
 </nav> 
+
+<ng-template #logOut>
+    <button (click)="signOut()" class="btn btn-danger" >Log Out</button>
+</ng-template>

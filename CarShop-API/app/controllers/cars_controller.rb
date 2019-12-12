@@ -2,6 +2,7 @@ require 'pry'
 
 class CarsController < ApplicationController
   before_action :set_car, only: [:show, :update, :destroy]
+  before_action :authenticate_user!, except: [:show, :index]
 
   # GET /cars
   def index

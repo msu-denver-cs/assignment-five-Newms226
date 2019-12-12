@@ -83,8 +83,8 @@ end
 
 puts 'Seeded Cars'
 
-# user = User.new
-# user.email = 'test@test.com'
-# user.password = 'test123'
-# user.password_confirmation = 'test123'
-# user.save!
+user = User.new
+user.email = 'test@test.com'
+user.password = 'admin123'
+user.password_confirmation = 'admin123'
+user.save!

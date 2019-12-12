@@ -3,9 +3,13 @@ Current Sprint
 Next Sprints
 
 ## curent tasks
-- pop up edit modal
-- authentication
+- finish authn tests
+- fix location of the github icon!
+- pop up create modal
+- pop up edit(update) modal
 - front-end tests
+- password reset
+- account management
 
 
 

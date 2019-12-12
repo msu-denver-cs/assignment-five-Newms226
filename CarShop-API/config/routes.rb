@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount_devise_token_auth_for 'User', at: 'api/auth'
   get 'api/typeahead/cars', to: 'typeahead#cars'
   get 'api/typeahead/parts', to: 'typeahead#parts'
   get 'api/typeahead/makes', to: 'typeahead#makes'
