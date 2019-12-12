@@ -11,15 +11,13 @@ export const defaultErrors = {
   required: (error) => `This field is required`,
   minlength: ({ requiredLength, actualLength }) => `Expect ${requiredLength} but got ${actualLength}`,
   email: ({email}) => 'Not a valid email',
-  MatchPassword: ({MatchPassword}) => 'Passwords do not match'
+  MatchPassword: ({MatchPassword}) => 'Passwords do not match' // TODO, match case
 }
 
 export const FORM_ERRORS = new InjectionToken('FORM_ERRORS', {
   providedIn: 'root',
   factory: () => defaultErrors
 });
-
-
 
 @Directive({
   selector: '[formControl], [formControlName]'
@@ -30,7 +28,7 @@ export class ControlErrorsDirective implements OnDestroy {
 
   constructor(private hostElement: ElementRef<HTMLElement>,
               @Self() private control: NgControl,
-              @Optional() @Host() private form: FormSubmitDirective,
+              @Optional() @Host() private form: FormSubmitDirective, // allows directive to function without a submit button
               @Inject(FORM_ERRORS) private errors,
               private vcr: ViewContainerRef,
               private resolver: ComponentFactoryResolver
@@ -41,9 +39,9 @@ export class ControlErrorsDirective implements OnDestroy {
   ngOnInit() {
     merge( // change to concat?
       this.submit$,
-      // this.control.valueChanges.pipe(
-      //   debounceTime(1000) // wait one second
-      // )
+      this.control.valueChanges.pipe(
+        debounceTime(1000) // wait one second
+      ),
       fromEvent(this.hostElement.nativeElement, 'blur')
     ).pipe(
       untilDestroyed(this)
