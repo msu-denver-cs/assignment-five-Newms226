@@ -9,7 +9,9 @@ COPY Gemfile /CarShop-API/Gemfile
 COPY Gemfile.lock /CarShop-API/Gemfile.lock
 RUN gem install bundler
 RUN bundle install
+
 COPY . /CarShop-API
+# RUN bundle exec rake rails:update:bin
 
 # Add a script to be executed every time the container starts.
 COPY entrypoint.sh /usr/bin/
