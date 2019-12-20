@@ -13,12 +13,11 @@ See docker-compose.yml for docker configuration
 1. Install docker
 2. Clone this repository
 3. `docker-compose up --build`
-4. Navigate [here](http://localhost:4200) (localhost:4200) after each image has had time to build & load
+4. `docker-compose run ror rake db:create`
+5. `docker-compose run ror rails db:migrate`
+    - Note this command takes a while
+6. Navigate [here](http://localhost:4200) (localhost:4200) after each image has had time to build & load
    - view json api responses at http://localhost:3000
-
-## Optionally
-5. `docker-compose run ror rake db:create`
-6. `docker-compose run 
 
 ## Cool features
 - Responsive web design powered by [Bootstrap 4](https://getbootstrap.com/docs/4.4/getting-started/introduction/)
