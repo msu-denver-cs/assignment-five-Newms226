@@ -15,8 +15,9 @@ See docker-compose.yml for docker configuration
 3. `docker-compose up --build`
 4. `docker-compose run ror rake db:create`
 5. `docker-compose run ror rails db:migrate`
+6. `docker-compose run ror rails db:seed`
     - Note this command takes a while
-6. Navigate [here](http://localhost:4200) (localhost:4200) after each image has had time to build & load
+7. Navigate [here](http://localhost:4200) (localhost:4200) after each image has had time to build & load
    - view json api responses at http://localhost:3000
 
 ## Cool features
